@@ -1,0 +1,124 @@
+@import "../mixins/resp";
+
+.navbar {
+  position: fixed;
+  background-color: transparent;
+  margin: 0 auto;
+  width: 100%;
+  padding: 30px 0;
+  top: 0;
+  transition: 0.5s linear;
+
+  .menuToggler {
+    position: relative;
+    cursor: pointer;
+    background: none;
+    width: 30px;
+    outline: none;
+    border: none;
+    z-index: 999;
+    display: none;
+
+    span {
+      display: block;
+      height: 3px;
+      background-color: $main-white;
+      margin: 6px 0;
+      position: relative;
+      transition: 0.3s linear;
+    }
+  }
+
+  .navbarMenu {
+    padding-right: 50px;
+    padding-left: 50px;
+    display: flex;
+    align-items: center;
+    position: fixedS;
+    justify-content: space-around;
+    z-index: 999;
+
+    a {
+      align-items: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 500;
+
+      transition: 0.2s linear;
+      text-decoration: none;
+
+      &:hover {
+        color: $main-blue !important;
+      }
+    }
+  }
+}
+
+.stickyLanding {
+  background-color: $main-greyish;
+  padding: 15px 0;
+
+  .navbarMenu a {
+    color: #111;
+  }
+  .menuToggler span {
+    color: #111;
+  }
+}
+
+@include mobile {
+  .navbar {
+    //Without this a{} gets overriden by the a{} up.
+    display: flex;
+    width: 100%;
+    z-index: 999;
+    .menuToggler {
+      margin-left: 10px;
+      display: block;
+    }
+    .navbarMenu {
+      position: fixed;
+      height: 100vh;
+      width: 100%;
+
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      background-color: $main-blue;
+      top: 0;
+      left: -100%;
+      padding: 80px 40px;
+      transition: 0.3s linear;
+
+      a {
+        display: block;
+        font-size: 30px;
+        font-weight: lighter;
+        margin: 30px 0;
+        text-decoration: none;
+      }
+    }
+  }
+  .navbarMenu.active {
+    left: 0;
+    z-index: 998;
+  }
+  .stickyLanding {
+    background-color: $main-greyish;
+    padding: 10px 0;
+    align-items: center;
+    z-index: 9999;
+    .menuToggler {
+      //margin-top: 0;
+      span {
+        background-color: black;
+      }
+    }
+    .navbarMenu {
+      a {
+        color: white;
+      }
+    }
+  }
+}

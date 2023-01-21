@@ -1,0 +1,126 @@
+@import "../mixins/resp";
+
+.section {
+  padding: 40px 0;
+  background-color: $main-white;
+  padding-bottom: 200px;
+
+  .sectionTitle {
+    margin-top: 0;
+    padding-top: 150px;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 80px;
+    font-size: 25px;
+    color: #111;
+    padding-bottom: 20px;
+    font-weight: 400;
+    border: 1px solid transparent;
+    border-bottom: 1px solid black;
+    width: 20%;
+  }
+}
+
+.about {
+  padding: 0 15px;
+  padding-top: 100px;
+
+  .aboutContent {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+
+    .aboutPic {
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      padding-right: 35px;
+    }
+    .aboutText {
+      flex: 1;
+
+      h2 {
+        color: #111;
+        padding: 20px 0;
+        font-weight: 400;
+      }
+      h3 {
+        margin: 10px 0;
+        color: #444;
+        font-size: 16px;
+
+        span:nth-child(1):after,
+        span:nth-child(2):after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          background-color: #444;
+          display: inline-block;
+          border-radius: 50%;
+          margin: 0 14px;
+        }
+      }
+      p {
+        font-size: 17px;
+        text-align: justify;
+        line-height: 35px;
+        padding-right: 40px;
+        /*margin-top:20px;*/
+
+        a {
+          color: $main-blue;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .about {
+    .aboutContent {
+      width: 95%;
+      margin: 0 auto;
+      .aboutPic {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        padding-right: 0 !important;
+      }
+      .aboutText {
+        .name {
+          color: $main-blue;
+        }
+        h2 {
+          text-align: center;
+        }
+        p {
+          padding: 0;
+        }
+      }
+
+      h3 {
+        display: flex;
+        flex-direction: column;
+        span:nth-child(1):before,
+        span:nth-child(2):before,
+        span:nth-child(3):before,
+        span:nth-child(3):after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          background-color: #444;
+          display: inline-block;
+          border-radius: 50%;
+          margin: 0 14px;
+        }
+      }
+    }
+  }
+  .section {
+    .sectionTitle {
+      width: 50%;
+    }
+  }
+}
