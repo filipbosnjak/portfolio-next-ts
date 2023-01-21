@@ -1,0 +1,86 @@
+@import "../mixins/resp";
+
+.footer {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url(../../images/code_lines_programming_130775_3840x2160.jpg) no-repeat
+      center;
+  background-size: cover;
+  //backdrop-filter: blur(25px);
+
+  color: #fff;
+  padding: 80px 0;
+  text-align: center;
+
+  .copyright {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 20px;
+
+    a {
+      font-size: 19px;
+      color: var(--main-color);
+      font-weight: 500;
+    }
+  }
+  //Icons styling
+  .middle {
+    margin: 100px 0px;
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      display: inline-block;
+      width: 90px;
+      height: 90px;
+      background: #f1f1f1;
+      margin: 10px;
+      border-radius: 30%;
+      box-shadow: 0 5px 15px -5px #00000070;
+      color:/*#3498db*/ $main-blue;
+      overflow: hidden;
+      position: relative;
+
+      &:hover {
+        i {
+          transform: scale(1.7);
+        }
+      }
+      i {
+        line-height: 90px;
+        font-size: 26px;
+        transition: 0.15s linear;
+      }
+    }
+  }
+}
+
+@keyframes aaa {
+  0% {
+    left: -110%;
+    top: 90%;
+  }
+  50% {
+    left: 10%;
+    top: -30%;
+  }
+  100% {
+    top: -10%;
+    left: -10%;
+  }
+}
+
+@include mobile {
+  .middle {
+    flex-wrap: wrap;
+    .btn {
+      &::before {
+        display: none;
+      }
+      &:hover {
+        i {
+          color: $main-blue !important;
+        }
+      }
+    }
+  }
+}

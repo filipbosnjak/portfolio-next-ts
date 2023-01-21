@@ -1,0 +1,80 @@
+@import "../mixins/resp";
+
+.home {
+  width: 100%;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110vh;
+  text-align: center;
+  h1 {
+    margin: 0;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 40px;
+  }
+  h2 {
+    margin: 0;
+    font-weight: 400;
+    color: #fff;
+  }
+  .lgHeading {
+    font-size: 7rem;
+  }
+  .smHeading {
+    margin-bottom: 2rem;
+    padding: 0.2rem 1rem;
+  }
+  .textSecondary {
+    color: $main-blue;
+  }
+  .buttons {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+
+    a {
+      display: inline-block;
+      margin: 15px 30px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      width: 180px;
+      border: 1px solid;
+      border-color: $main-blue;
+      padding: 14px 0;
+      border-radius: 6px;
+      transition: 0.5s ease;
+      text-decoration: none;
+
+      &:hover {
+        background-color: $main-blue;
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+@include mobile {
+  .home {
+    width: 100%;
+    .content {
+      width: 100%;
+    }
+    width: 100%;
+    h1 {
+      margin-bottom: 60px;
+      word-wrap: break-word;
+    }
+    h2 {
+      width: 100%;
+    }
+    .lgHeading {
+      font-size: 50px;
+    }
+    .buttons {
+      flex-wrap: wrap;
+    }
+  }
+}

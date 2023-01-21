@@ -1,0 +1,87 @@
+@import "../mixins/resp";
+
+.section2 {
+  background-color: #353b48;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url(../../images/bg2.jpg) no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  .title2 {
+    color: #fff;
+    border-bottom: 1px solid white;
+  }
+}
+
+.skills {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 95%;
+  margin: 0 auto;
+
+  .sectionTitle {
+    color: #fff;
+  }
+
+  .skill {
+    width: calc(32%);
+    text-align: center;
+    border: 1px solid $main-blue;
+    border-radius: 6px;
+    margin: 20px 0px;
+    padding: 70px 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s linear;
+
+    h4 {
+      margin: 15px 0;
+      font-size: 25px;
+      font-weight: 300;
+    }
+
+    &:hover {
+      background-color: $main-blue;
+
+      .icon {
+        color: #fff;
+      }
+    }
+
+    .icon {
+      color: $main-blue;
+      font-size: 60px;
+      margin-bottom: 10px;
+      transition: 0.3s linear;
+      padding: 0px 5px;
+    }
+    .reactIcon {
+      font-size: 70px;
+      animation: reactIconAnimation 5s linear infinite;
+    }
+  }
+}
+
+@include mobile {
+  .skills {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .skill {
+      width: 99%;
+    }
+  }
+}
+
+@keyframes reactIconAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
