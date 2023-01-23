@@ -3,7 +3,7 @@
 @import "./partials/navbar";
 @import "./partials/about";
 @import "./partials/skills";
-@import "./partials/works";
+@import "partials/works";
 @import "./partials/contact";
 @import "./partials/poweredby";
 @import "./partials/poweredby";
@@ -111,8 +111,7 @@
           font-size: 15px;
           font-weight: 500;
           width: 100%;
-          border: 1px solid;
-          border-color: $main-blue;
+          border: 1px solid $main-blue;
           padding: 14px 0;
           border-radius: 6px;
           transition: 0.5s ease;

@@ -63,16 +63,20 @@
       width: 100%;
       transition: 0.4s linear;
       z-index: 1;
+      height: 30vh;
     }
   }
 }
 
 @include mobile {
-  #works {
+  .works{
     .works {
+      flex-direction: column;
       .work {
-        width: 49%;
+        width: 90vw;
+        margin: 10px auto;
       }
     }
   }
-}
+
+  }
