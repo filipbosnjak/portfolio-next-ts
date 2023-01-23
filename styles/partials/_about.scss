@@ -1,16 +1,15 @@
 @import "../mixins/resp";
 
 .section {
-  padding: 40px 0;
   background-color: $main-white;
-  padding-bottom: 200px;
+  padding-bottom: 30px;
 
   .sectionTitle {
     margin-top: 0;
-    padding-top: 150px;
+    padding-top: 120px;
     text-align: center;
     margin: 0 auto;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     font-size: 25px;
     color: #111;
     padding-bottom: 20px;
@@ -23,8 +22,6 @@
 
 .about {
   padding: 0 15px;
-  padding-top: 100px;
-
   .aboutContent {
     display: flex;
     align-items: center;
@@ -32,10 +29,10 @@
     margin-bottom: 100px;
 
     .aboutPic {
-      width: 340px;
-      height: 340px;
+      width: 250px;
+      height: 250px;
       border-radius: 50%;
-      padding-right: 35px;
+      margin-right: 20px;
     }
     .aboutText {
       flex: 1;
