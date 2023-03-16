@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/components/Works.module.scss";
 import Image from "next/image";
 import chatApp from "../images/works/chatApp.png";
 import movieApp from "../images/works/movieApp.png";
@@ -21,6 +21,7 @@ const Works = () => {
       <section className={`${styles.works} ${styles.light} ${styles.section}`}>
           <div id="works">
               <h1 className={`${styles.sectionTitle} ${styles.title4}`}>My Work</h1>
+              <h2 className={styles.subtitle}>For the backend projects checkout my <a target="_blank" href="https://github.com/filipbosnjak" className={styles.github}>Github.</a></h2>
               <div className={styles.works}>
                   <a
                       href='http://dominis.phy.hr/~fbosnjak/weather-app/'

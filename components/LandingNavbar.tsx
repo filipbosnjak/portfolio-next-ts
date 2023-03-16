@@ -1,10 +1,13 @@
 import Link from "next/link";
 import React , {useState, useEffect } from "react";
 
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/components/Navbar.module.scss";
+import {useRouter} from "next/router";
 
 
 const LandingNavbar = () => {
+
+    const router = useRouter()
 
     const [isSticky, setIsSticky] = useState("");
     const [isActive, setIsActive] = useState("");
@@ -47,6 +50,7 @@ const LandingNavbar = () => {
                                   onClick={() => {
                                       scroll(0, 0);
                                       toggle();
+                                      router.push('/')
                                   }}>
                                   Home
                               </a>
@@ -54,15 +58,30 @@ const LandingNavbar = () => {
                           <div className={styles.link} >
                               <a onClick={toggle} href="/#about">About Me</a>
                           </div>
-                          <div className={styles.link} ><a>My Blog</a></div>
+                          <div className={styles.link} onClick={() => {
+                            router.push('/blog')
+                          }
+                          }  ><a>My Blog</a></div>
                           <div className={styles.link}>
-                              <a onClick={toggle} href="/#skills">Skills</a>
+                              <a onClick={() => {
+                                toggle()
+                                  router.push('/#skills')
+                              }
+                              }>Skills</a>
                           </div>
                           <div className={styles.link} >
-                              <a onClick={toggle}>My Work</a>
+                              <a onClick={() => {
+                                  toggle()
+                                  router.push('/#works')
+                              }
+                              }>My Work</a>
                           </div>
                           <div className={styles.link} >
-                              <a onClick={toggle}>Contact Me</a>
+                              <a onClick={() => {
+                                  toggle()
+                                  router.push('/#contact')
+                              }
+                              }>Contact Me</a>
                           </div>
                   </div>
               </div>

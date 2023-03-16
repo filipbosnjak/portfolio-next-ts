@@ -8,6 +8,17 @@
   justify-content: center;
   height: 110vh;
   text-align: center;
+
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  background: rgb(2, 0, 36);
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  url(../../images/bg.jpg) no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
   h1 {
     margin: 0;
     font-weight: 400;
