@@ -3,13 +3,37 @@
 .works {
   background-color: #353b48;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(../../images/shahadat-rahman-BfrQnKBulYQ-unsplash.jpg) no-repeat center;
+  url(../../images/shahadat-rahman-BfrQnKBulYQ-unsplash.jpg) no-repeat center;
   background-size: cover;
+  padding-bottom: 10px;
 
   .title4 {
-    color: $main-white;
+    color: #fff;
     border-bottom: 1px solid white;
+    width: 10%;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 400;
+    height: 15vh;
+    display: flex;
+    align-items: end;
+    padding: 10px;
+    justify-content: center;
+    margin: 0 auto 20px;
   }
+
+  .subtitle{
+    color: white;
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    .github{
+      color: #6474f6;
+      text-decoration: none;
+    }
+  }
+
 
   .works {
     display: flex;
@@ -17,7 +41,6 @@
     flex-wrap: wrap;
     width: 98%;
     margin: 0 auto;
-
     .work {
       width: calc(24%);
       overflow: hidden;
@@ -70,6 +93,12 @@
 
 @include mobile {
   .works{
+    .title4{
+      width: 50%;
+    }
+    .subtitle{
+      font-size: 16px;
+    }
     .works {
       flex-direction: column;
       .work {
@@ -79,4 +108,4 @@
     }
   }
 
-  }
+}

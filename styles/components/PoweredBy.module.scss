@@ -1,0 +1,18 @@
+@import "../mixins/resp";
+
+.poweredby {
+  width: 100%;
+  height: 30vh;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+@include mobile {
+  .poweredby {
+    height: 20vh;
+    margin-top: 400px;
+  }
+
+}

@@ -1,9 +1,7 @@
 import React from "react";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/components/Skills.module.scss";
 import {SiJava, SiSpringboot, SiTypescript, SiNextdotjs, SiTensorflow, SiKotlin, SiGraphql} from "react-icons/si";
-import { FaBuffer, FaDocker, FaDatabase, FaPython} from "react-icons/fa";
-import {DiJavascript} from "react-icons/di"
-import {FiAirplay} from "react-icons/fi"
+import { FaBuffer, FaDatabase, FaPython} from "react-icons/fa";
 
 const Skills = () => {
   return (

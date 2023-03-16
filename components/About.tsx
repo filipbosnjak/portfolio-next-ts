@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/components/About.module.scss";
 import Image from "next/image";
 import portrait from "../images/portrait.jpg";
 

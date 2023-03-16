@@ -1,0 +1,120 @@
+@import "../mixins/resp";
+
+.contact {
+  width: 100%;
+  margin: 0 auto;
+  background-color: $main-white;
+  height: 100%;
+  padding: 10px;
+
+  .sectionTitle {
+    margin-top: 0;
+    padding-top: 120px;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    font-size: 25px;
+    color: #111;
+    padding-bottom: 20px;
+    font-weight: 400;
+    border: 1px solid transparent;
+    border-bottom: 1px solid black;
+    width: 20%;
+  }
+
+  .contactInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .item {
+      width: calc(33% - 20px);
+      height: 160px;
+      background-color: #353b48;
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.3s linear;
+      &:hover {
+        background-color: $main-blue;
+      }
+    }
+    i {
+      display: block;
+      font-size: 40px;
+      line-height: 120px;
+      height: 100px;
+    }
+  }
+  .contactForm {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    input,
+    textarea {
+      width: 100%;
+      height: 50px;
+      margin: 10px 0px;
+      background-color: #353b48;
+      border: none;
+      outline: none;
+      padding: 20px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 18px;
+    }
+    .nameZone,
+    .emailZone {
+      max-width: calc(50% - 10px);
+    }
+    .messageZone {
+      min-height: 200px;
+      resize: vertical;
+    }
+    .btn1 {
+      width: 180px;
+      background-color: transparent;
+      color: $main-blue;
+      font-size: 16px;
+      border: 2px solid $main-blue;
+      padding: 0;
+      margin-left: auto;
+      cursor: pointer;
+      transition: 0.3s linear;
+
+      &:hover {
+        background-color: $main-blue;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .contact {
+    height: 105vh;
+    .sectionTitle {
+      width: 50%;
+    }
+    .contactInfo {
+      flex-direction: column;
+      .item {
+        width: 94%;
+        margin: 10px 0;
+      }
+    }
+    .contactForm {
+      flex-direction: column;
+      .nameZone,
+      .emailZone {
+        max-width: 100%;
+      }
+      .btn1 {
+        margin: 10px auto;
+      }
+    }
+  }
+}

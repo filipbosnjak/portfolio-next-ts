@@ -1,7 +1,6 @@
 import React from "react";
 
-import styles from "../styles/Home.module.scss";
-import Link from "next/link";
+import styles from "../styles/components/Home.module.scss";
 import LandingNavbar from "./LandingNavbar";
 
 const LandingSection = () => {

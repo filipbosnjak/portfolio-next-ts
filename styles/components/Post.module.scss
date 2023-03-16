@@ -1,0 +1,72 @@
+@import "../mixins/resp";
+
+.post{
+  background: rgb(2, 0, 36);
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.98)),
+  url(../../images/bg.jpg) no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .text{
+    width: 90%;
+    height: auto;
+    margin: 20px 10px;
+    padding: 30px 70px;
+    border-radius: 10px;
+    background-color: rgb(27,27,30);
+    font-weight: 600;
+    .title{
+      margin: 60px 0;
+      text-align: center;
+      color: white;
+      font-size: 38px;
+    }
+    .info{
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 300;
+    }
+    .content{
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      line-height: 40px;
+    }
+  }
+}
+
+@include mobile {
+  .post{
+
+    .text{
+      width: 100%;
+      height: auto;
+      margin: 20px 10px;
+      padding: 30px 30px;
+      border-radius: 10px;
+      background-color: rgb(27,27,30);
+      font-weight: 600;
+      .title{
+        margin: 60px 0;
+        text-align: center;
+        color: white;
+        font-size: 38px;
+      }
+      .info{
+        flex-direction: column;
+        & > * {
+          margin: 3px 0;
+        }
+      }
+      .content{
+      }
+    }
+  }
+}
