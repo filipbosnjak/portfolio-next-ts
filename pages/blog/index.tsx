@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from '../../styles/components/Blog.module.scss'
 import LandingNavbar from "@/components/LandingNavbar";
 import fs from "fs";
@@ -28,6 +28,10 @@ export interface PostData {
 
 const Index = (props: Slug) => {
 
+    const [tags, setTags] = useState<Set<string>>();
+    const [currentTag, setCurrentTag] = useState<string>();
+    const [currentPostData, setCurrentPostData] = useState<PostData[]>()
+
     const router = useRouter()
 
     const marked = props.markdownWithMetaData.map((item) => {
@@ -37,13 +41,29 @@ const Index = (props: Slug) => {
         return item.data as PostData
     })
 
+    useEffect(() => {
+        setCurrentPostData(postData)
+        setTags(_curr => {
+            return new Set(
+                postData
+                    .map(post => post.tags)
+                    .map(tagsNotSeparated => tagsNotSeparated.split(", "))
+                    .flat()
+                    .concat(["All"])
+            )}
+        )
+    }, []);
+
+
   return (
       <>
         <LandingNavbar/>
         <div className={styles.blog}>
+            <div className={styles.left}>
 
+            </div>
             <div className={styles.posts}>
-                {postData.map(data => {
+                {currentPostData?.map(data => {
                     // @ts-ignore
                     return <div key={data} className={styles.post} onClick={() => {
                             router.push(`/blog/${data.slug}`)
@@ -52,11 +72,24 @@ const Index = (props: Slug) => {
                         <div className={styles.postTitle}>{data.postTitle}</div>
                         <div className={styles.postShort}>{data.shortIntro}</div>
                         <div className={styles.info}>
-                            <div className={styles.tags}>{data.tags}</div>
+                            <div className={styles.tag}>{data.tags}</div>
                             <div className={styles.minutes}><CiTimer className={styles.timer}/>{data.minutes} min</div>
                             <div className={styles.date}>{data.date.toString()}</div>
                         </div>
                     </div>
+                })}
+            </div>
+            <div className={styles.right}>
+                {tags && Array.from(tags).map(tag => {
+                    return (
+                        <div className={styles.tag} key={crypto.randomUUID()} onClick={() => {
+                            setCurrentTag(tag)
+                            tag == "All" ? setCurrentPostData(postData) :
+                            setCurrentPostData(postData.filter(post => post.tags.includes(tag)))
+                        }} >
+                            {tag}
+                        </div>
+                    )
                 })}
             </div>
         </div>
