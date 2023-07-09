@@ -31,7 +31,7 @@ const LandingSection = () => {
 
                         <div className={styles.right}>
                             <a
-                                href='http://dominis.phy.hr/~fbosnjak/Filip_Bo%c5%a1njak_Resume.pdf'
+                                href='/resume.pdf'
                                 download=''>
                                 Download CV
                             </a>
