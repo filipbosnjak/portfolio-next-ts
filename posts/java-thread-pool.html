@@ -1,0 +1,67 @@
+---
+title: Java Thread Pools
+postTitle: Java Thread Pools
+shortIntro: Java Thread Pools Crash Course
+label: Java, Threading
+description: Everything you need to know about Java Thread Pools - Brief Overview
+author: Filip Bošnjak, Fullstack Developer
+date: 9.7.2023.
+slug: java-thread-pool
+minutes: 5
+tags: Java, Threading
+---
+
+<p>
+    <p>Creating multiple <i>Threads</i> in Java can have significant impact on the memory consumption and consequently
+    on application performance.</p>
+    Java <span style="color: #185bc9"><b>Thread Pools</b></span> provide a mechanism for managing and reusing a pool of worker threads,
+    improving the performance and scalability of concurrent Java applications. A thread pool consists of a fixed number of
+    threads that are created and maintained by the Java <span style="color: #185bc9"><b>Executor</b></span> framework. Instead of creating
+    and destroying threads for each task, thread pools keep a set of idle threads ready to execute incoming tasks,
+    reducing the overhead of thread creation and context switching.
+</p>
+<br>
+<p>
+    The <i>Java Executor</i> framework provides a high-level abstraction for working with thread pools. It offers several implementations
+    of the Executor interface, such as <u>ThreadPoolExecutor</u> and <u>ScheduledThreadPoolExecutor</u>, that manage thread pools and handle
+    task scheduling. These implementations provide configurable parameters, including the core pool size, maximum pool size,
+    and thread keep-alive time, allowing developers to tune the thread pool according to the specific requirements of their
+    application.
+</p>
+<br>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
+    <img  src="/img/executorservice.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px"/>
+    <p style="font-size: 14px"><i>Creating an executor service and executing one runnable</i></p>
+</div>
+<br>
+
+<p>
+    Thread pools offer several advantages over manually managing threads. Firstly, they provide better control over
+    the number of threads running concurrently, preventing resource exhaustion and improving system stability.
+    The fixed-size nature of thread pools ensures that the number of active threads remains within bounds, avoiding
+    excessive resource consumption. Additionally, thread pools can help manage the workload by <i>queueing</i> incoming
+    tasks when all threads are busy, preventing task overload and potential performance degradation.
+</p>
+<br>
+<p>
+    Thread pools also improve application performance by <span style="color: #185bc9"><b>reusing threads</b></span>. Creating and destroying threads incurs significant
+    overhead due to the associated thread initialization and context switching. By reusing existing threads from the pool,
+    this overhead is eliminated, resulting in faster task execution and improved overall throughput. Thread reuse also helps
+    maintain thread-local data, such as thread-local variables or thread-specific configurations, throughout the execution of
+    multiple tasks, preserving the integrity and consistency of such data.
+</p>
+<br>
+<p>
+    Another advantage of thread pools is their ability to provide thread lifecycle management and fault tolerance.
+    Thread pools can handle thread failures, such as unhandled exceptions or unexpected terminations, by replacing
+    failed threads with new ones. This ensures that the pool always has the required number of active threads available
+    for task execution, even in the face of thread failures. Furthermore, thread pools facilitate <i>graceful shutdown</i> of
+    the application by allowing tasks to complete and preventing the abrupt termination of threads, ensuring that resources
+    are properly released and application state is maintained.
+</p>
+<br>
+<p>
+    In conclusion, Java thread pools are a powerful mechanism for managing and optimizing concurrent execution in Java applications.
+    By providing a pool of reusable threads, thread pools reduce the overhead of thread creation, enhance system stability,
+    and improve application performance.</p>
+
