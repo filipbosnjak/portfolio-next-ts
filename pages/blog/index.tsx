@@ -73,10 +73,9 @@ export const getStaticProps: GetStaticProps = async () => {
     //   .toString();
     // const parsedMarkdown = matter(markdownWithMetaData);
     const files = fs.readdirSync("posts");
-    console.log(files)
     const paths = files.map((filename) => {
         return filename.replace(".md", "").replace(".html", "");
-    }).filter(path => path == "img");
+    }).filter(path => path != "img");
 
     const markdownWithMetaData = paths.map((filename) => {
         return fs.readFileSync(path.join("posts", filename + ".html")).toString();
