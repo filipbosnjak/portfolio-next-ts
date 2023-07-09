@@ -50,12 +50,12 @@ export const getStaticPaths = async () => {
 //Function returning props to the post component - data feeding
 export const getStaticProps = async ({ params: { slug } } : {params: {slug: string}}) => {
 
-    console.log("slug: ", slug)
     //Getting info about all the files
     const files = fs.readdirSync("posts");
     const paths = files.map((filename) => {
         return filename.replace(".md", "").replace(".html", "");
-    });
+    }).filter(path => path != 'img');
+
 
     const markdownWithMetaDataAll = paths.map((filename) => {
         return fs.readFileSync(path.join("posts", filename + ".html")).toString();
