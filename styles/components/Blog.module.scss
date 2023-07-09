@@ -1,6 +1,9 @@
 @import "../partials/variables";
 @import "../mixins/resp";
 
+$side-window-width: 15vw;
+$center-window-width: 85vw;
+
 .blog{
   width: 100%;
   height: 100%;
@@ -22,6 +25,7 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    width: $center-window-width;
     .post{
       width: 500px;
       height: 120px;
@@ -66,7 +70,30 @@
       }
     }
   }
+  .right{
+    width: $side-window-width;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .tag{
+      width: max-content;
+      height: max-content;
+      border: 1px solid gray;
+      padding: 3px 25px;
+      border-radius: 10px;
+      margin: 8px;
+      cursor: pointer;
+      &:hover{
+        background: #185bc9;
+      }
 
+    }
+  }
+  .left{
+    width: $side-window-width;
+    height: 100%;
+  }
 }
 
 @include mobile {
@@ -87,6 +114,7 @@
 
     color: rgba(255, 255, 255, 0.6);
     overflow: scroll;
+    flex-direction: column;
     .posts{
       display: flex;
       align-items: center;
