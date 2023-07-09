@@ -12,22 +12,26 @@ tags: Java, Threading
 ---
 
 <p>
-<b>
-    Java threads</b> are a crucial aspect of concurrent programming in Java, allowing for the simultaneous execution of multiple
+    <span style="color: #185bc9"><b>Java Threads</b></span> are a crucial aspect of concurrent programming in Java, allowing for the simultaneous execution of multiple
     tasks within a single program. Threads are lightweight units of execution that operate independently, enabling efficient
     utilization of system resources and enhancing the responsiveness and performance of Java applications.
     By dividing a program into smaller, independent units of work, threads enable tasks to be executed concurrently,
     potentially improving overall throughput and reducing latency.
 </p>
-
+<br>
 <p>
-In Java, threads can be created by either extending the Thread class or implementing the Runnable interface. Extending the Thread
+In Java, threads can be created by either extending the
+    <span style="color: #185bc9"><b>Thread</b></span> class or implementing the <span style="color: #185bc9"><b>Runnable</b></span> interface. Extending the Thread
     class provides more flexibility, allowing direct access to thread-related methods and properties. On the other hand,
     implementing the Runnable interface offers a more object-oriented approach, separating the task logic from the thread
     implementation. Thread objects can be created and started using the start() method, which initiates the execution of the
     thread's run() method. Each thread operates in its own execution context, with its own stack and program counter, enabling
     independent execution paths within a program.
 </p>
+<div style="display: flex; justify-content: center; ">
+    <img  src="/img/javathread.png" style="max-height: 100%; max-width: 100%; object-fit: contain"/>
+</div>
+<br>
 
 <p>
     Java provides various mechanisms for thread synchronization to ensure thread safety and prevent data corruption.
@@ -37,6 +41,7 @@ In Java, threads can be created by either extending the Thread class or implemen
     achieved using more advanced constructs like locks, semaphores, and condition variables, which provide finer-grained control
     over thread interactions and enable more complex synchronization patterns.
 </p>
+<br>
 <p>
     Java's threading model supports both thread-level and task-level parallelism. Thread-level parallelism allows multiple
     threads to execute simultaneously, leveraging the capabilities of modern multi-core processors. This enables faster execution
@@ -45,6 +50,7 @@ In Java, threads can be created by either extending the Thread class or implemen
     provides higher-level abstractions for managing thread pools and executing tasks asynchronously, simplifying the implementation
     of task-level parallelism and improving overall application performance.
 </p>
+<br>
 <p>
 Proper understanding and management of threads are essential for developing robust and efficient concurrent Java applications.
     Care must be taken to avoid common pitfalls such as deadlock, livelock, and resource contention. Thread safety should be
