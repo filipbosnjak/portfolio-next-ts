@@ -1,0 +1,62 @@
+---
+title: Why are circular dependencies bad in Spring
+postTitle: Circular dependencies in Spring Boot
+shortIntro: Why are circular dependencies bad in Spring
+label: Java, Spring, Spring Boot
+description: Why are circular dependencies bad in Spring - Explained
+author: Filip Bošnjak, Fullstack Developer
+date: 14.7.2023.
+slug: circular-deps-spring-boot
+minutes: 5
+tags: Java, Spring, Spring Boot
+---
+
+<p>
+    Circular dependencies are generally considered bad design practice in software development, including in Spring Boot applications. I always wondered why.
+    Let's see what circular dependencies are in the first place. Supposed we have two classes that depend on each other like this:
+</p>
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin: 40px 0">
+    <img  src="/img/circulardeps.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px"/>
+    <p style="font-size: 14px"><i>Circular dependencies example</i></p>
+</div>
+Here we can see that PostService is injected via constructor injection into UserService. And UserService is injected the same way into PostService. If we run this we are going to get the following
+error in the console:
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin: 40px 0">
+    <img  src="/img/circulardepserror.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px"/>
+    <p style="font-size: 14px"><i>Circular dependencies console error</i></p>
+</div>
+
+<p>
+    In conclusion: circular dependencies are so bad that Spring won't let you do it (without some hacking -> @Lazy annotation).
+</p>
+<br>
+<p>
+    Here are a few reasons why circular dependencies can be problematic:
+</p>
+<br>
+<p>
+    <span style="color: #185bc9">Code complexity and maintainability</span>: Circular dependencies create <i>tight coupling</i> between classes, making the code more complex and harder to understand. It becomes difficult to determine
+    the flow of dependencies and the order of initialization. As the codebase grows, it becomes challenging to maintain and modify the code due to its tangled nature.
+</p>
+<br>
+<p>
+    <span style="color: #185bc9">Reduced modularity and re-usability</span>: Circular dependencies break modularity and hinder code re-usability. Classes that are tightly coupled cannot be easily separated or reused
+    in different contexts. This limits the flexibility and extensibility of the codebase.
+</p>
+<br>
+<p>
+    <span style="color: #185bc9">Testing difficulties</span>: Circular dependencies can make it harder to write unit tests. In order to test a class with circular dependencies, you may need to mock or stub a large number
+    of interconnected classes. This increases the complexity of test setup and can make tests more fragile.
+</p>
+<br>
+<p>
+    <span style="color: #185bc9">Dependency resolution issues</span>: Circular dependencies can lead to <i>issues with dependency resolution</i>. For example, if two classes depend on each other, it becomes a challenge for the container (Spring ApplicationContext) to instantiate and initialize the objects correctly. It may result in runtime errors or unexpected behavior.
+</p>
+<br>
+<p>
+    To overcome these issues, it's recommended to follow best practices and principles, such as the <span style="color: #185bc9">Dependency Inversion Principle (DIP)</span>
+    and the <span style="color: #185bc9">Single Responsibility Principle (SRP)</span>. These principles promote loose coupling, modular design, and clear separation of concerns.
+    By structuring your codebase with a clear and hierarchical dependency graph, you can avoid circular dependencies and create more maintainable and testable Spring Boot applications.
+</p>
+
