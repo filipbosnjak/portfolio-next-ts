@@ -1,0 +1,78 @@
+---
+title: Java Transactions
+postTitle: Java Transactions
+shortIntro: Java Transactions and why are they important
+label: Java
+description: Java Transactions and why are they important - Short intro
+author: Filip Bošnjak, Fullstack Developer
+date: 21.7.2023.
+slug: importance-of-transactions-in-java
+minutes: 3
+tags: Java
+---
+
+<p>
+    In Java, <span style="color: #185bc9">transactions</span> are a way to manage a group of operations as a <span style="color: #185bc9">single unit of work</span>, ensuring that either
+    all the operations within the group are executed successfully, or none of them are executed at all.
+    Transactions are commonly used when dealing with databases or any other systems that require data consistency and integrity.
+</p>
+<br>
+<p>
+    The key concepts in transactions are known under abbreviation <span style="color: #185bc9"><b>ACID</b></span>:
+</p>
+<br>
+<p>
+    1. <span style="color: #185bc9">Atomicity</span> ensures that all the operations within a transaction are treated
+    as a single indivisible unit. If any part of the transaction fails,
+    the whole transaction is rolled back, and the data is left unchanged.
+</p>
+<br>
+<p>
+    2. <span style="color: #185bc9">Consistency</span> guarantees that a transaction brings the database from one valid state to another.
+    It enforces integrity constraints, ensuring that data remains in a valid and consistent state after the
+    transaction completes successfully.
+</p>
+<br>
+<p>
+    3. <span style="color: #185bc9">Isolation</span> is taking care of that each transaction is isolated from other concurrent transactions.
+    Transactions should not interfere with each other, and each one should feel like it's running in isolation.
+</p>
+<br>
+<p>
+    4. <span style="color: #185bc9">Durability</span> ensures that once a transaction is committed, the changes made to the data persist even in the face
+    of system failures, such as power outages or crashes.
+</p>
+<br>
+<p>
+    Lets look at some examples in Spring Boot application.
+</p>
+<br>
+<p>
+    First we need to enable transaction manager in a configuration component and register <span style="color: #32de84">PlatformTransactionManager</span> in the application context
+    like bellow:
+</p>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; ">
+    <img  src="/img/transactionmanager.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px" alt="Transaction manager configuration"/>
+    <p style="font-size: 14px"><i>Transaction manager configuration</i></p>
+</div>
+<br>
+<p>
+    Then we can start using <span style="color: #32de84">@Transactional</span> annotation on our classes and methods. This annotation applied
+    on a method will ensure that all the steps in that method complete or none of them. If the transaction fails at any step it will rollback
+    all the operations it did before.
+</p>
+<br>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; ">
+    <img  src="/img/transactional.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px" alt="@Transactional example"/>
+    <p style="font-size: 14px"><i>@Transactional example</i></p>
+</div>
+
+<p>
+    In the example above, neither of two users will be persisted to the database because at the end we are throwing CustomException, whick
+    extends Exception class. In @Transactional annotation we can specify e.g. on which exceptions we want to rollback all operations.
+</p>
+<br>
+<p>
+    Important thing to note is that transactions are not limited to just database operations.
+    You can use similar concepts and frameworks for managing transactions involving other resources like <i>files</i>, <i>message</i> <i>queues,</i> etc. The key is to ensure that related operations are treated as a single unit with the <span style="color: #185bc9">ACID</span> properties in mind.
+</p>
