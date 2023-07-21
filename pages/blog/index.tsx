@@ -60,7 +60,7 @@ const Index = (props: Slug) => {
         <LandingNavbar/>
         <div className={styles.blog}>
             <div className={styles.left}>
-
+                Categories
             </div>
             <div className={styles.posts}>
                 {currentPostData?.map(data => {
