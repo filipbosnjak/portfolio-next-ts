@@ -4,40 +4,125 @@ import Image from "next/image";
 import chatApp from "../images/works/chatApp.png";
 import movieApp from "../images/works/movieApp.png";
 import multistepform from "../images/works/multistepform.png";
-import parallax from "../images/works/parallax.png";
 import pizzaApp from "../images/works/pizzaApp.png";
 import reactNavbar from "../images/works/reactNavbar.png";
-import sassLogin from "../images/works/sassLogin.png";
-import sassLogin1 from "../images/works/sassLogin1.png";
-import sassPortfolio from "../images/works/sassPortfolio.png";
-import searchBar from "../images/works/searchBar.png";
 import snakeGame from "../images/works/snakeGame.png";
 import todoApp from "../images/works/todoApp.png";
 import todoAppReactRedux from "../images/works/todoAppReactRedux.png";
+import gameoflife from "../images/works/gameoflife.png";
 import weatherApp from "../images/works/weatherApp.png";
+import kotlingraphqlapi from "../images/works/kotlingraphqlapi.png";
+import apachekafkanodejs from "../images/works/apachekafkanodejs.png"
+import kotlinds from "../images/works/kotlinds.png"
+import javagmailreader from "../images/works/javagmailreader.png"
+import springsecurityjwt from "../images/works/springsecurityjwt.png"
+import electronwappbot from "../images/works/electronwhatsappbot.png"
 
 const Works = () => {
   return (
       <section className={`${styles.works} ${styles.light} ${styles.section}`}>
           <div id="works">
               <h1 className={`${styles.sectionTitle} ${styles.title4}`}>My Work</h1>
-              <h2 className={styles.subtitle}>For the backend projects checkout my <a target="_blank" href="https://github.com/filipbosnjak" className={styles.github}>Github.</a></h2>
+              <h2 className={styles.subtitle}>For more backend projects checkout my <a target="_blank" href="https://github.com/filipbosnjak" className={styles.github}>Github.</a></h2>
               <div className={styles.works}>
                   <a
-                      href='http://dominis.phy.hr/~fbosnjak/weather-app/'
+                      href='https://game-of-life-nextjs-ts.vercel.app/'
                       target='_blank'
                       className={styles.work}>
                       <Image
-                          src={weatherApp}
+                          src={gameoflife}
                           alt='Filip Bošnjak'
                           className={styles.aboutPic}
                       />
                       <div className={styles.info}>
-                          <h3>Weather App</h3>
-                          <div className={styles.cat}>Reactjs | Redux</div>
+                          <h3>Game of life</h3>
+                          <div className={styles.cat}>Nextjs | Typescript</div>
                       </div>
                   </a>
-
+                  <a
+                      href='https://github.com/filipbosnjak/kotlin-graphql-api'
+                      className={styles.work}
+                      target='_blank'>
+                      <Image
+                          src={kotlingraphqlapi}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Kotlin/GraphQL API Starter</h3>
+                          <div className={styles.cat}>Kotlin, GraphQL (DGS - Netflix)</div>
+                      </div>
+                  </a>
+                  <a
+                      href='https://github.com/filipbosnjak/wapp-bot1'
+                      className={styles.work}
+                      target='_blank'>
+                      <Image
+                          src={electronwappbot}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Whatsapp Bot with Electron</h3>
+                          <div className={styles.cat}>Electron, Vite, Typescript</div>
+                      </div>
+                  </a>
+                  <a
+                      href='https://github.com/filipbosnjak/apache-kafka-typescript-node'
+                      target='_blank'
+                      className={styles.work}>
+                      <Image
+                          src={apachekafkanodejs}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Apache Kafka & Nodejs Integration</h3>
+                          <div className={styles.cat}>Apache Kafka, Nodejs, Typescript</div>
+                      </div>
+                  </a>
+                  <a
+                      href='https://github.com/filipbosnjak/kotlin-data-structures'
+                      className={styles.work}
+                      target='_blank'>
+                      <Image
+                          src={kotlinds}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Data Structures & Algorithms in Kotlin</h3>
+                          <div className={styles.cat}>Kotlin</div>
+                      </div>
+                  </a>
+                  <a
+                      href='https://github.com/filipbosnjak/java-gmail-reader'
+                      className={styles.work}
+                      target='_blank'>
+                      <Image
+                          src={javagmailreader}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Gmail Reader in Java</h3>
+                          <div className={styles.cat}>Java, Google Gmail API</div>
+                      </div>
+                  </a>
+                  <a
+                      href='https://github.com/filipbosnjak/spring-security-jwt'
+                      className={styles.work}
+                      target='_blank'>
+                      <Image
+                          src={springsecurityjwt}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Spring Security & JWT</h3>
+                          <div className={styles.cat}>Java, Spring Security, JWT</div>
+                      </div>
+                  </a>
                   <a
                       href='http://dominis.phy.hr/~fbosnjak/ChatApp/'
                       target='_blank'
@@ -52,6 +137,22 @@ const Works = () => {
                           <div className={styles.cat}>Reactjs | Firebase & Redux</div>
                       </div>
                   </a>
+
+                  {/*<div style={{color: "white"}}>Some legacy fronted mini projects :)</div><br/>
+                  <a
+                      href='http://dominis.phy.hr/~fbosnjak/weather-app/'
+                      target='_blank'
+                      className={styles.work}>
+                      <Image
+                          src={weatherApp}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />
+                      <div className={styles.info}>
+                          <h3>Weather App</h3>
+                          <div className={styles.cat}>Reactjs | Redux</div>
+                      </div>
+                  </a>
                   <a
                       href='http://dominis.phy.hr/~fbosnjak/PizzaApp/'
                       target='_blank'
@@ -64,6 +165,20 @@ const Works = () => {
                       <div className={styles.info}>
                           <h3>Pizza App</h3>
                           <div className={styles.cat}>Reactjs | Redux & Framer Motion</div>
+                      </div>
+                  </a>
+                  <a
+                      href='http://dominis.phy.hr/~fbosnjak/Snake/'
+                      target='_blank'
+                      className={styles.work}>
+                      <Image
+                          src={snakeGame}
+                          alt='Filip Bošnjak'
+                          className={styles.aboutPic}
+                      />{" "}
+                      <div className={styles.info}>
+                          <h3>Snake Game</h3>
+                          <div className={styles.cat}>JavaScript</div>
                       </div>
                   </a>
 
@@ -138,106 +253,7 @@ const Works = () => {
                           <div className={styles.cat}>React.js</div>
                       </div>
                   </a>
-
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/Snake/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={snakeGame}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Snake Game</h3>
-                          <div className={styles.cat}>JavaScript</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/movieApp/idx.html'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={movieApp}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Movie App</h3>
-                          <div className={styles.cat}>Javascript</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/SassPortfolio/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={sassPortfolio}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Business Portfolio (Responsive)</h3>
-                          <div className={styles.cat}>HTML5,Sass</div>
-                      </div>
-                  </a>
-
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/LoignForm_Sass/'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={sassLogin}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Login Form</h3>
-                          <div className={styles.cat}>HTML5, Sass</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/Animated%20Search%20Bar/'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={searchBar}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Animated Search Bar</h3>
-                          <div className={styles.cat}>HTML5, Sass</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/LoginFormAnimatedSass/'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={sassLogin1}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Login Form 2</h3>
-                          <div className={styles.cat}>HTML5, Sass</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/Parallax%20Landing%20Page%20-%20Rellax.js/'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={parallax}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Simple Landing Page</h3>
-                          <div className={styles.cat}>HTML5, CSS3, Parallax.js</div>
-                      </div>
-                  </a>
+*/}
               </div>
           </div>
       </section>
