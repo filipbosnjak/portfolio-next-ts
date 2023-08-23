@@ -15,7 +15,6 @@ const LandingSection = () => {
                             Filip <span className={styles.textSecondary}>Bošnjak</span>
                         </h1>
                         <h2 className={styles.smHeading}>
-                            Physics &{" "}
                             <span className={styles.textSecondary}>Computer Science </span>
                             Master
                         </h2>

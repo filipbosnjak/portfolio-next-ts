@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {Message} from "@/types/types";
 import sgMail from "@sendgrid/mail"
+import * as process from "process";
 
 type Data = {
   message: string
@@ -13,9 +14,10 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   const message: Message = JSON.parse(req.body)
-    console.log(message.to)
 
-    sgMail.setApiKey('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');
+    sgMail.setApiKey(
+        process.env.SEND_GRID_API_KEY as string
+    );
     const msg = {
         to: 'filip.bosnajk25@gmail.com', // Change to your recipient
         from: message.to, // Change to your verified sender
@@ -32,4 +34,9 @@ export default function handler(
         .catch((error) => {
             console.error(error)
         })*/
+
+    res.status(200).send({
+        message: "okay",
+        error: false
+    })
 }
