@@ -15,8 +15,8 @@ const LandingSection = () => {
                             Filip <span className={styles.textSecondary}>Bošnjak</span>
                         </h1>
                         <h2 className={styles.smHeading}>
-                            <span className={styles.textSecondary}>Computer Science </span>
-                            Master
+                            Computer Science<span className={styles.textSecondary}> Master </span>
+
                         </h2>
                         <h2 className={styles.smHeading}>
                             <span className={styles.textSecondary}>FullStack </span>{" "}
@@ -30,11 +30,18 @@ const LandingSection = () => {
 
                         <div className={styles.right}>
                             <a
-                                href='/resume.pdf'
+                                href='/filip_bosnjak_resume.pdf'
                                 download=''>
                                 Download CV
                             </a>
                         </div>
+                    <div className={styles.right}>
+                        <a
+                            href='/filip_bosnjak_masters.pdf'
+                            download=''>
+                            Master's Degree
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
