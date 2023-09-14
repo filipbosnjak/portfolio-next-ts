@@ -35,13 +35,13 @@ const LandingSection = () => {
                                 Download CV
                             </a>
                         </div>
-                    <div className={styles.right}>
+{/*                    <div className={styles.right}>
                         <a
                             href='/filip_bosnjak_masters.pdf'
                             download=''>
                             Master's Degree
                         </a>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         </section>
