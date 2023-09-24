@@ -2,21 +2,15 @@ import React from "react";
 import styles from "../styles/components/Works.module.scss";
 import Image from "next/image";
 import chatApp from "../images/works/chatApp.png";
-import movieApp from "../images/works/movieApp.png";
-import multistepform from "../images/works/multistepform.png";
-import pizzaApp from "../images/works/pizzaApp.png";
-import reactNavbar from "../images/works/reactNavbar.png";
-import snakeGame from "../images/works/snakeGame.png";
-import todoApp from "../images/works/todoApp.png";
-import todoAppReactRedux from "../images/works/todoAppReactRedux.png";
 import gameoflife from "../images/works/gameoflife.png";
-import weatherApp from "../images/works/weatherApp.png";
 import kotlingraphqlapi from "../images/works/kotlingraphqlapi.png";
 import apachekafkanodejs from "../images/works/apachekafkanodejs.png"
 import kotlinds from "../images/works/kotlinds.png"
 import javagmailreader from "../images/works/javagmailreader.png"
 import springsecurityjwt from "../images/works/springsecurityjwt.png"
 import electronwappbot from "../images/works/electronwhatsappbot.png"
+import crudhilla from "../images/works/crudhilla.png"
+
 
 const Works = () => {
   return (
@@ -31,7 +25,7 @@ const Works = () => {
                       className={styles.work}>
                       <Image
                           src={gameoflife}
-                          alt='Filip Bošnjak'
+                          alt='gameoflife'
                           className={styles.aboutPic}
                       />
                       <div className={styles.info}>
@@ -40,12 +34,26 @@ const Works = () => {
                       </div>
                   </a>
                   <a
+                      href='https://spring-boot-react-hilla-production.up.railway.app/'
+                      target='_blank'
+                      className={styles.work}>
+                      <Image
+                          src={crudhilla}
+                          alt='crudhilla'
+                          className={styles.aboutPic}
+                      />
+                      <div className={styles.info}>
+                          <h3>Simple CRUD App</h3>
+                          <div className={styles.cat}>React | Spring Boot | Hilla</div>
+                      </div>
+                  </a>
+                  <a
                       href='https://github.com/filipbosnjak/kotlin-graphql-api'
                       className={styles.work}
                       target='_blank'>
                       <Image
                           src={kotlingraphqlapi}
-                          alt='Filip Bošnjak'
+                          alt='kotlingraphqlapi'
                           className={styles.aboutPic}
                       />{" "}
                       <div className={styles.info}>
@@ -59,7 +67,7 @@ const Works = () => {
                       target='_blank'>
                       <Image
                           src={electronwappbot}
-                          alt='Filip Bošnjak'
+                          alt='electronwappbot'
                           className={styles.aboutPic}
                       />{" "}
                       <div className={styles.info}>
@@ -73,7 +81,7 @@ const Works = () => {
                       className={styles.work}>
                       <Image
                           src={apachekafkanodejs}
-                          alt='Filip Bošnjak'
+                          alt='apachekafkanodejs'
                           className={styles.aboutPic}
                       />{" "}
                       <div className={styles.info}>
@@ -87,7 +95,7 @@ const Works = () => {
                       target='_blank'>
                       <Image
                           src={kotlinds}
-                          alt='Filip Bošnjak'
+                          alt='kotlinds'
                           className={styles.aboutPic}
                       />{" "}
                       <div className={styles.info}>
@@ -101,7 +109,7 @@ const Works = () => {
                       target='_blank'>
                       <Image
                           src={javagmailreader}
-                          alt='Filip Bošnjak'
+                          alt='javagmailreader'
                           className={styles.aboutPic}
                       />{" "}
                       <div className={styles.info}>
@@ -115,7 +123,7 @@ const Works = () => {
                       target='_blank'>
                       <Image
                           src={springsecurityjwt}
-                          alt='Filip Bošnjak'
+                          alt='springsecurityjwt'
                           className={styles.aboutPic}
                       />{" "}
                       <div className={styles.info}>
@@ -129,7 +137,7 @@ const Works = () => {
                       className={styles.work}>
                       <Image
                           src={chatApp}
-                          alt='Filip Bošnjak'
+                          alt='chatApp'
                           className={styles.aboutPic}
                       />
                       <div className={styles.info}>
