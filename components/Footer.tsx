@@ -27,7 +27,7 @@ const Footer = () => {
             <footer className={styles.footer}>
                 <div>
                     <div className={styles.copyright}>
-                        &copy; 2020 | Created & Designed By{" "}
+                        &copy; 2024 | Created & Designed By{" "}
                         <Link href={"/blog"}>Filip Bošnjak</Link>
                     </div>
                         <div className={styles.middle}>
