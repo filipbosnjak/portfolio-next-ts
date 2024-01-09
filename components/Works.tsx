@@ -10,6 +10,7 @@ import javagmailreader from "../images/works/javagmailreader.png"
 import springsecurityjwt from "../images/works/springsecurityjwt.png"
 import electronwappbot from "../images/works/electronwhatsappbot.png"
 import crudhilla from "../images/works/crudhilla.png"
+import auth from "../images/works/auth.jpg"
 
 
 const Works = () => {
@@ -19,6 +20,20 @@ const Works = () => {
               <h1 className={`${styles.sectionTitle} ${styles.title4}`}>My Work</h1>
               <h2 className={styles.subtitle}>For more backend projects checkout my <a target="_blank" href="https://github.com/filipbosnjak" className={styles.github}>Github.</a></h2>
               <div className={styles.works}>
+                  <a
+                      href='https://next-auth-starter-two.vercel.app/'
+                      target='_blank'
+                      className={styles.work}>
+                      <Image
+                          src={auth}
+                          alt='gameoflife'
+                          className={styles.aboutPic}
+                      />
+                      <div className={styles.info}>
+                          <h3>Authentication & Registration</h3>
+                          <div className={styles.cat}>Nextjs | Typescript | Next-Auth | Prisma</div>
+                      </div>
+                  </a>
                   <a
                       href='https://game-of-life-nextjs-ts.vercel.app/'
                       target='_blank'
