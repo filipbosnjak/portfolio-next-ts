@@ -5,52 +5,58 @@ import portrait from "../images/portrait.jpg";
 
 const About = () => {
   return (
-      <section className={styles.section}>
-          <div id='about' className={styles.about}>
-              <h1 className={styles.sectionTitle}>About Me</h1>
-              <div className={styles.aboutContent}>
-                      <div className={styles.aboutPic}>
-                          <Image
-                              src={portrait}
-                              alt='Filip Bošnjak'
-                              className={styles.aboutPic}
-                          />
-                      </div>
-
-                  <div className={styles.aboutText}>
-                      <h2>
-                          Hello. I'm <div className={styles.name}>Filip Bošnjak.</div>
-                      </h2>
-                      <p>
-                          I'm am experienced fullstack developer with passion for web application
-                          development and for backend programming. <br/>I love
-                          everything that has to do with new tech and is a good challenge.
-                          <br/>I'm a master of physics and computer science at{" "}
-                          <a href='http://www.pmf.unizg.hr/phy/en' target="_blank">
-                              Department of Physics, Faculty of Science, University of Zagreb{" "}
-                          </a>
-                          (
-                          <a href='http://www.pmf.unizg.hr/phy/en/nastava/predmeti/prof_fizike_i_informatike' target="_blank">
-                              Physics and Computer Science Education
-                          </a>
-                          ). <br/>
-                          I aspire towards a career that will satisfy my curiosity and my
-                          hunger for learning new things.
-                      </p>
-                      <p style={{ margin: 10 + "px" + 0 }}>
-                          In my free time when I'm not coding I bike, play cello and read.
-                      </p>
-
-                      <h3>
-                          <span>Programmer</span>
-                          <span>Software Developer</span>
-                          <span>Coding Enthusiast</span>
-                      </h3>
-                  </div>
-              </div>
+    <section className={styles.section}>
+      <div id="about" className={styles.about}>
+        <h1 className={styles.sectionTitle}>About Me</h1>
+        <div className={styles.aboutContent}>
+          <div className={styles.aboutPic}>
+            <Image
+              src={portrait}
+              alt="Filip Bošnjak"
+              className={styles.aboutPic}
+            />
           </div>
-      </section>
-  )
-}
+
+          <div className={styles.aboutText}>
+            <p>
+              Senior Software Consultant (freelance) specializing in enterprise-grade
+              solutions and helping businesses achieve their goals.</p> <p>With a
+              proven track record of delivering high-quality software solutions.
+            </p>
+
+            <ul className={styles.expertiseList} style={{ paddingLeft: "20px", paddingTop: "10px", paddingBottom: "10px", }}>
+              <li>
+                <strong>Enterprise Expertise:</strong> 5+ years of professional
+                experience building scalable backend systems and full-stack
+                applications
+              </li>
+              <li>
+                <strong>Technical Leadership:</strong> Proven track record in
+                Java/Spring Boot, Kotlin/GraphQL, and modern web technologies
+              </li>
+              <li>
+                <strong>Innovation Focus:</strong> Passionate about AI/ML
+                applications and emerging technologies in software development
+              </li>
+                <li>
+                    <strong>Advanced Education:</strong> Master's degree in Physics
+                    and Computer Science from{" "}
+                    <a href="http://www.pmf.unizg.hr/phy/en" target="_blank">
+                        University of Zagreb
+                    </a>
+                </li>
+            </ul>
+
+            <h3>
+              <span>Senior Consultant</span>
+              <span>Technical Leader</span>
+              <span>Solution Architect</span>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default About;
