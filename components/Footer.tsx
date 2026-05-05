@@ -3,11 +3,8 @@ import styles from "../styles/components/Footer.module.scss";
 import Link from "next/link";
 import { FaLocationArrow } from "react-icons/fa";
 import {
-  FaFacebook,
   FaGithub,
   FaLinkedin,
-  FaTwitter,
-  FaInstagram,
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -37,17 +34,6 @@ const Footer = () => {
             <Link href={"/blog"}>Filip Bošnjak</Link>
           </div>
           <div className={styles.middle}>
-            <div className={styles.f1}>
-              <a
-                className={styles.btn}
-                href="https://www.facebook.com/filip.bosnjak.7509"
-                target="_blank"
-              >
-                <i className="fab fa-facebook-f">
-                  <FaFacebook />
-                </i>
-              </a>
-            </div>
             <div className={styles.f2}>
               <a
                 className={styles.btn}
@@ -72,21 +58,6 @@ const Footer = () => {
               </a>
             </div>
 
-            <div className={styles.f4}>
-              <a className={styles.btn} href="">
-                <i className="fab fa-twitter">
-                  <FaTwitter />
-                </i>
-              </a>
-            </div>
-
-            <div className={styles.f5}>
-              <a className={styles.btn} href="">
-                <i className="fab fa-instagram ">
-                  <FaInstagram />
-                </i>
-              </a>
-            </div>
           </div>
         </div>
       </footer>
