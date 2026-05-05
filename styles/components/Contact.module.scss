@@ -4,7 +4,8 @@
   width: 100%;
   margin: 0 auto;
   background-color: $main-white;
-  height: 100%;
+  height: auto;
+  min-height: 100vh;
   padding: 10px;
 
   .sectionTitle {
@@ -95,7 +96,7 @@
 
 @include mobile {
   .contact {
-    height: 105vh;
+    height: auto;
     .sectionTitle {
       width: 50%;
     }
