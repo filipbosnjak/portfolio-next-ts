@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import styles from "../styles/components/Contact.module.scss";
 import ErrorPopup from "@/components/notifications/ErrorPopup";
 import type { ContactPayload } from "@/types/types";
@@ -7,8 +7,19 @@ const Contact = () => {
   const [errorOpen, setErrorOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successOpen, setSuccessOpen] = useState<boolean>(false);
+  const [isSending, setIsSending] = useState<boolean>(false);
+  const [isCoolingDown, setIsCoolingDown] = useState<boolean>(false);
+  const cooldownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [payload, setPayload] = useState<ContactPayload>({});
+
+  useEffect(() => {
+    return () => {
+      if (cooldownTimeoutRef.current) {
+        clearTimeout(cooldownTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const showError = (msg: string) => {
     setErrorMessage(msg);
@@ -17,6 +28,11 @@ const Contact = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+
+    if (isSending || isCoolingDown) {
+      return;
+    }
 
     const from = payload.from?.trim();
     const senderName = payload.senderName?.trim();
@@ -29,6 +45,7 @@ const Contact = () => {
     }
 
     let response: Response;
+    setIsSending(true);
     try {
       response = await fetch("/api/sendemail", {
         method: "POST",
@@ -36,6 +53,7 @@ const Contact = () => {
         body: JSON.stringify({ from, senderName, subject, body }),
       });
     } catch {
+      setIsSending(false);
       showError("Network error. Please try again.");
       return;
     }
@@ -44,18 +62,26 @@ const Contact = () => {
     try {
       data = (await response.json()) as { message?: string; error?: boolean };
     } catch {
+      setIsSending(false);
       showError("Unexpected server response.");
       return;
     }
+
+    setIsSending(false);
 
     if (!response.ok || data.error) {
       showError(data.message ?? "Could not send message.");
       return;
     }
 
+    setIsCoolingDown(true);
+    cooldownTimeoutRef.current = setTimeout(() => {
+      setIsCoolingDown(false);
+      cooldownTimeoutRef.current = null;
+    }, 60000);
     setSuccessOpen(true);
     setPayload({});
-    e.currentTarget.reset();
+    form.reset();
   };
 
   return (
@@ -132,11 +158,29 @@ const Contact = () => {
                 setPayload((p) => ({ ...p, body: e.target.value }))
               }
             />
-            <input
-              type="submit"
-              value="Send Message"
-              className={styles.btn1}
-            />
+            <div
+              className={styles.submitWrapper}
+              data-tooltip={
+                isSending
+                  ? "Your message is being sent."
+                  : isCoolingDown
+                    ? "You cannot send another message right now."
+                    : undefined
+              }
+            >
+              <button
+                type="submit"
+                className={styles.btn1}
+                disabled={isSending || isCoolingDown}
+              >
+                {isSending && <span className={styles.spinner}></span>}
+                {isSending
+                  ? "Sending..."
+                  : isCoolingDown
+                    ? "Message Sent"
+                    : "Send Message"}
+              </button>
+            </div>
           </form>
         </div>
       </section>
