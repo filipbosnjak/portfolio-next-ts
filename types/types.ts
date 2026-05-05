@@ -1,7 +1,6 @@
-export type Message = {
-    from?: string
-    senderName?: string
-    to: 'filipo.bosnjak@gmail.com'
-    subject?: string
-    body?: string
+export type ContactPayload = {
+  from?: string
+  senderName?: string
+  subject?: string
+  body?: string
 }

@@ -3,7 +3,15 @@ import styles from "../styles/components/About.module.scss";
 import Image from "next/image";
 import portrait from "../images/portrait.jpg";
 
+function wholeYearsSinceAug2020(): number {
+  const now = new Date();
+  const months =
+    (now.getFullYear() - 2020) * 12 + (now.getMonth() - 7); // career start August 2020 (month index 7)
+  return Math.max(0, Math.floor(months / 12));
+}
+
 const About = () => {
+  const experienceYears = wholeYearsSinceAug2020();
   return (
     <section className={styles.section}>
       <div id="about" className={styles.about}>
@@ -26,9 +34,9 @@ const About = () => {
 
             <ul className={styles.expertiseList} style={{ paddingLeft: "20px", paddingTop: "10px", paddingBottom: "10px", }}>
               <li>
-                <strong>Enterprise Expertise:</strong> 5+ years of professional
-                experience building scalable backend systems and full-stack
-                applications
+                <strong>Enterprise Expertise:</strong> {experienceYears}+ years of
+                professional experience since August 2020 building scalable backend
+                systems and full-stack applications
               </li>
               <li>
                 <strong>Technical Leadership:</strong> Proven track record in
