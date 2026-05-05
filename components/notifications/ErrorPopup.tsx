@@ -9,12 +9,13 @@ type ErrorPopupProps = {
     message: string,
     isOpen: boolean
     setOpen:  React.Dispatch<React.SetStateAction<boolean>>
+    severity?: 'error' | 'success'
 }
 
 function SlideTransition(props: SlideProps) {
     return <Slide {...props} direction="down" />;
 }
-export default function ErrorPopup({message, isOpen, setOpen}: ErrorPopupProps) {
+export default function ErrorPopup({message, isOpen, setOpen, severity = 'error'}: ErrorPopupProps) {
 
     const [state, setState] = React.useState<{
         Transition: React.ComponentType<
@@ -44,7 +45,7 @@ export default function ErrorPopup({message, isOpen, setOpen}: ErrorPopupProps) 
                 key={state.Transition.name}
                 anchorOrigin={{horizontal: "center", vertical: "top"}}
             >
-                <Alert onClose={() => setOpen(!isOpen)} severity="error" sx={{ width: '100%' }}>
+                <Alert onClose={() => setOpen(!isOpen)} severity={severity} sx={{ width: '100%' }}>
                     {message}
                 </Alert>
             </Snackbar>
