@@ -20,7 +20,7 @@ const sampleTextPoints = (
   width: number,
   height: number,
   text: string,
-): { x: number; y: number }[] => {
+): { x: number; y: number; shade: number }[] => {
   const off = document.createElement("canvas");
   off.width = width;
   off.height = height;
@@ -31,7 +31,7 @@ const sampleTextPoints = (
     getComputedStyle(document.documentElement)
       .getPropertyValue("--font-host")
       .trim() || "Montserrat";
-  const fontSize = Math.min(width * 0.38, height * 0.42, 380);
+  const fontSize = Math.min(width * 0.2, height * 0.34, 260);
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = "#fff";
   ctx.font = `600 ${fontSize}px ${family}, Montserrat, sans-serif`;
@@ -39,20 +39,46 @@ const sampleTextPoints = (
   ctx.textBaseline = "middle";
   ctx.letterSpacing = `${Math.round(fontSize * 0.04)}px`;
 
-  const cx = width * 0.68;
-  const cy = height * 0.48;
+  // centered in the gap between the hero copy and the terminal card
+  const cx = width * 0.55;
+  const cy = height * 0.45;
   ctx.fillText(text, cx, cy);
 
   // strict grid sampling gives the dithered dot-matrix look
-  const step = width < 768 ? 8 : 7;
+  const step = width < 768 ? 7 : 6;
   const data = ctx.getImageData(0, 0, width, height).data;
-  const points: { x: number; y: number }[] = [];
+  const points: { x: number; y: number; shade: number }[] = [];
 
+  // wrap the flat letterforms onto a sphere: expand the middle, pull the
+  // edges in, and shade by depth so the cluster reads as a round blob
+  const R = fontSize * 1.05;
   for (let y = 0; y < height; y += step) {
     for (let x = 0; x < width; x += step) {
       const alpha = data[(y * width + x) * 4 + 3];
-      if (alpha > 80) points.push({ x, y });
+      if (alpha <= 80) continue;
+      const dx = x - cx;
+      const dy = y - cy;
+      const r = Math.hypot(dx, dy);
+      const k = Math.min(r / R, 1);
+      const bulge = r > 0 ? (Math.sin((k * Math.PI) / 2) * R * 0.82) / r : 1;
+      points.push({
+        x: cx + dx * bulge,
+        y: cy + dy * bulge,
+        shade: Math.cos((k * Math.PI) / 2) * 0.7 + 0.3,
+      });
     }
+  }
+
+  // soft cloud halo so the blob has ragged edges instead of a crisp outline
+  const haloCount = Math.floor(points.length * 0.35);
+  for (let i = 0; i < haloCount; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const rr = R * (0.55 + Math.pow(Math.random(), 0.6) * 0.65);
+    points.push({
+      x: cx + Math.cos(angle) * rr * 1.15,
+      y: cy + Math.sin(angle) * rr * 0.85,
+      shade: 0.25 + Math.random() * 0.25,
+    });
   }
 
   return points;
@@ -93,9 +119,10 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
       dots = points.map((pt) => {
         const angle = Math.random() * Math.PI * 2;
         const dist = Math.random() * Math.min(width, height) * 0.5;
-        // mostly faint dots, a few brighter sparks
-        let a = 0.06 + Math.random() * 0.34;
-        if (Math.random() < 0.08) a += 0.3;
+        // mostly faint dots, a few brighter sparks; depth shading from the
+        // sphere wrap keeps the center bright and the rim in shadow
+        let a = (0.1 + Math.random() * 0.35) * pt.shade;
+        if (Math.random() < 0.08) a += 0.3 * pt.shade;
         return {
           hx: pt.x,
           hy: pt.y,
