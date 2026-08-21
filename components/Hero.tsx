@@ -192,18 +192,22 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="order-3 flex flex-wrap items-center gap-4 md:hidden">
-          <a href="#contact" className="ds-btn ds-btn-primary ds-btn-m">
+        <div className="order-3 flex flex-col items-stretch gap-3 md:hidden">
+          <a href="#contact" className="ds-btn ds-btn-primary ds-btn-m justify-center">
             Contact me
           </a>
-          <a href={site.resume} download className="ds-btn ds-btn-secondary ds-btn-m">
+          <a
+            href={site.resume}
+            download
+            className="ds-btn ds-btn-secondary ds-btn-m justify-center"
+          >
             Download CV
           </a>
           <a
             href={site.github}
             target="_blank"
             rel="noreferrer"
-            className="ds-btn ds-btn-secondary ds-btn-m"
+            className="ds-btn ds-btn-secondary ds-btn-m justify-center"
           >
             GitHub
           </a>
