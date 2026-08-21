@@ -68,7 +68,7 @@ const Hero = () => {
         <ParticleMark />
       </div>
       {/* soft shadow pocket so the particle cluster sits in shade */}
-      <div className="pointer-events-none absolute inset-0 z-[6] bg-[radial-gradient(ellipse_40%_35%_at_50%_45%,rgba(4,7,13,0.5),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 z-[6] bg-[radial-gradient(ellipse_32%_28%_at_50%_45%,rgba(4,7,13,0.5),transparent_70%)]" />
       <div className="pointer-events-none absolute inset-0 z-[7] bg-gradient-to-r from-[#0a0a0a]/65 via-[#0a0a0a]/20 to-transparent md:from-[#0a0a0a]/55 md:via-[#0a0a0a]/10" />
       <div className="ds-container relative z-10 grid grid-cols-1 items-center gap-20 pt-40 pb-40 md:grid-cols-[60fr_40fr]">
         <div className="order-1 flex flex-col gap-10">

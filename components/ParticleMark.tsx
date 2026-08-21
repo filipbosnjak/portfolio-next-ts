@@ -79,10 +79,10 @@ const sampleTextPoints = (
   const haloCount = Math.floor(points.length * 0.35);
   for (let i = 0; i < haloCount; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const rr = R * (0.55 + Math.pow(Math.random(), 0.6) * 0.65);
+    const rr = R * (0.45 + Math.pow(Math.random(), 0.6) * 0.4);
     points.push({
-      x: cx + Math.cos(angle) * rr * 1.15,
-      y: cy + Math.sin(angle) * rr * 0.85,
+      x: cx + Math.cos(angle) * rr,
+      y: cy + Math.sin(angle) * rr * 0.8,
       shade: 0.25 + Math.random() * 0.25,
     });
   }
