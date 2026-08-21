@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
-type Particle = {
+type Dot = {
+  hx: number; // home position
+  hy: number;
   x: number;
   y: number;
-  tx: number;
-  ty: number;
   vx: number;
   vy: number;
-  r: number;
+  size: number;
   a: number;
   phase: number;
   freq: number;
@@ -43,25 +43,23 @@ const sampleTextPoints = (
   const cy = height * 0.48;
   ctx.fillText(text, cx, cy);
 
-  const step = width < 768 ? 7 : 5;
+  // strict grid sampling gives the dithered dot-matrix look
+  const step = width < 768 ? 8 : 7;
   const data = ctx.getImageData(0, 0, width, height).data;
   const points: { x: number; y: number }[] = [];
 
   for (let y = 0; y < height; y += step) {
     for (let x = 0; x < width; x += step) {
       const alpha = data[(y * width + x) * 4 + 3];
-      if (alpha > 80) {
-        points.push({
-          x: x + (Math.random() - 0.5) * step * 0.4,
-          y: y + (Math.random() - 0.5) * step * 0.4,
-        });
-      }
+      if (alpha > 80) points.push({ x, y });
     }
   }
 
   return points;
 };
 
+// Dot-matrix mark after the DeepSeek Harness hero: dim square particles
+// sitting in the shadowed part of the field, scattering away from the cursor.
 const ParticleMark = ({ text = "FB" }: { text?: string }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -75,9 +73,10 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
     let frame = 0;
     let width = 0;
     let height = 0;
-    let particles: Particle[] = [];
+    let dots: Dot[] = [];
     let running = true;
     let start = performance.now();
+    const mouse = { x: 0, y: 0, active: false };
 
     const build = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -91,57 +90,65 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const points = sampleTextPoints(width, height, text);
-      particles = points.map((pt) => {
+      dots = points.map((pt) => {
         const angle = Math.random() * Math.PI * 2;
-        const dist = Math.random() * Math.min(width, height) * 0.55;
+        const dist = Math.random() * Math.min(width, height) * 0.5;
+        // mostly faint dots, a few brighter sparks
+        let a = 0.06 + Math.random() * 0.34;
+        if (Math.random() < 0.08) a += 0.3;
         return {
+          hx: pt.x,
+          hy: pt.y,
           x: width * 0.5 + Math.cos(angle) * dist,
           y: height * 0.5 + Math.sin(angle) * dist,
-          tx: pt.x,
-          ty: pt.y,
           vx: 0,
           vy: 0,
-          r: Math.random() * 1.5 + 0.9,
-          a: Math.random() * 0.28 + 0.4,
+          size: Math.random() < 0.3 ? 3 : 2,
+          a,
           phase: Math.random() * Math.PI * 2,
-          freq: 0.7 + Math.random() * 1.4,
-          amp: 4 + Math.random() * 10,
+          freq: 0.4 + Math.random() * 0.8,
+          amp: 1.5 + Math.random() * 3.5,
         };
       });
     };
+
+    const REPEL_RADIUS = 120;
+    const REPEL_FORCE = 2.4;
 
     const draw = (now: number) => {
       if (!running) return;
       const t = (now - start) / 1000;
 
       ctx.clearRect(0, 0, width, height);
-      ctx.globalCompositeOperation = "lighter";
 
-      for (const p of particles) {
-        const ox = Math.cos(t * p.freq + p.phase) * p.amp;
-        const oy = Math.sin(t * p.freq * 0.85 + p.phase) * p.amp;
-        const swirl = t * 0.22;
-        const sx = ox * Math.cos(swirl) - oy * Math.sin(swirl);
-        const sy = ox * Math.sin(swirl) + oy * Math.cos(swirl);
+      for (const p of dots) {
+        // gentle idle wobble around home
+        const tx = p.hx + Math.cos(t * p.freq + p.phase) * p.amp;
+        const ty = p.hy + Math.sin(t * p.freq * 0.85 + p.phase) * p.amp;
+        p.vx += (tx - p.x) * 0.03;
+        p.vy += (ty - p.y) * 0.03;
 
-        const hx = p.tx + sx;
-        const hy = p.ty + sy;
-        p.vx += (hx - p.x) * 0.045;
-        p.vy += (hy - p.y) * 0.045;
-        p.vx *= 0.82;
-        p.vy *= 0.82;
+        if (mouse.active) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const d = Math.hypot(dx, dy);
+          if (d < REPEL_RADIUS && d > 0.5) {
+            const f = ((REPEL_RADIUS - d) / REPEL_RADIUS) * REPEL_FORCE;
+            p.vx += (dx / d) * f;
+            p.vy += (dy / d) * f;
+          }
+        }
+
+        p.vx *= 0.86;
+        p.vy *= 0.86;
         p.x += p.vx;
         p.y += p.vy;
 
-        const edge = Math.min(1, Math.max(0, (p.x / width - 0.32) / 0.18));
-        const pulse = 0.8 + Math.sin(t * 1.6 + p.phase) * 0.2;
-        ctx.fillStyle = `rgba(220, 236, 255, ${p.a * pulse * (0.35 + edge * 0.65)})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        const pulse = 0.85 + Math.sin(t * 1.2 + p.phase) * 0.15;
+        ctx.fillStyle = `rgba(198, 212, 230, ${p.a * pulse})`;
+        ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
       }
 
-      ctx.globalCompositeOperation = "source-over";
       frame = requestAnimationFrame(draw);
     };
 
@@ -154,6 +161,18 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
 
     const onResize = () => startLoop();
 
+    const onPointerMove = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active =
+        mouse.x >= 0 && mouse.y >= 0 && mouse.x <= width && mouse.y <= height;
+    };
+
+    const onPointerLeave = () => {
+      mouse.active = false;
+    };
+
     let cancelled = false;
     void document.fonts.ready.then(() => {
       if (!cancelled) startLoop();
@@ -161,12 +180,19 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
     startLoop();
 
     window.addEventListener("resize", onResize);
+    window.addEventListener("pointermove", onPointerMove);
+    document.documentElement.addEventListener("pointerleave", onPointerLeave);
 
     return () => {
       cancelled = true;
       running = false;
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointerMove);
+      document.documentElement.removeEventListener(
+        "pointerleave",
+        onPointerLeave,
+      );
     };
   }, [text]);
 
