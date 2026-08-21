@@ -41,7 +41,7 @@ const sampleTextPoints = (
   ctx.letterSpacing = `${Math.round(fontSize * 0.02)}px`;
 
   // centered in the gap between the hero copy and the terminal card
-  const cx = width * 0.55;
+  const cx = width * 0.5;
   const cy = height * 0.45;
   ctx.fillText(text, cx, cy);
   // stroke pass fattens the glyphs beyond the heaviest font weight
