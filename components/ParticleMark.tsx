@@ -38,7 +38,7 @@ const sampleTextPoints = (
   ctx.font = `800 ${fontSize}px ${family}, Montserrat, sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.letterSpacing = `${-Math.round(fontSize * 0.06)}px`;
+  ctx.letterSpacing = `${Math.round(fontSize * 0.02)}px`;
 
   // centered in the gap between the hero copy and the terminal card
   const cx = width * 0.55;
@@ -46,7 +46,7 @@ const sampleTextPoints = (
   ctx.fillText(text, cx, cy);
   // stroke pass fattens the glyphs beyond the heaviest font weight
   ctx.strokeStyle = "#fff";
-  ctx.lineWidth = fontSize * 0.07;
+  ctx.lineWidth = fontSize * 0.09;
   ctx.lineJoin = "round";
   ctx.strokeText(text, cx, cy);
 
