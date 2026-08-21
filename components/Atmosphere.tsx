@@ -40,7 +40,7 @@ const Atmosphere = () => {
     const ribbons: Ribbon[] = [
       // big bright smoke clouds, like the reference's white silk
       { p: [[0.55, 0.02], [0.75, 0.14], [0.95, 0.02], [1.15, 0.2]], width: 0.22, alpha: 0.75, dark: false, phase: 0.4, speed: 0.05, amp: 0.03 },
-      { p: [[-0.18, 0.32], [0.05, 0.12], [0.2, 0.4], [0.38, 0.22]], width: 0.16, alpha: 0.55, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
+      { p: [[-0.18, 0.32], [0.05, 0.12], [0.2, 0.4], [0.38, 0.22]], width: 0.13, alpha: 0.35, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
       { p: [[0.15, 1.05], [0.4, 0.7], [0.72, 0.95], [1.18, 0.55]], width: 0.2, alpha: 0.6, dark: false, phase: 4.1, speed: 0.045, amp: 0.03 },
       { p: [[0.6, 0.5], [0.8, 0.36], [1.0, 0.55], [1.16, 0.42]], width: 0.12, alpha: 0.4, dark: false, phase: 5.2, speed: 0.055, amp: 0.03 },
       // soft shadow folds
@@ -104,12 +104,12 @@ const Atmosphere = () => {
       octx.filter = "none";
       octx.globalCompositeOperation = "source-over";
 
-      // medium slate-blue base, brightest in the upper-left-center
+      // saturated cobalt-blue base, brightest in the upper-left-center
       const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
-      base.addColorStop(0, "#1c2c47");
-      base.addColorStop(0.4, "#31507c");
-      base.addColorStop(0.75, "#294261");
-      base.addColorStop(1, "#0d121c");
+      base.addColorStop(0, "#172c50");
+      base.addColorStop(0.4, "#2e5a96");
+      base.addColorStop(0.75, "#254b7e");
+      base.addColorStop(1, "#0c1526");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
@@ -121,9 +121,9 @@ const Atmosphere = () => {
         oh * 0.35,
         Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(92, 130, 178, 0.5)");
-      glow.addColorStop(0.55, "rgba(56, 88, 130, 0.22)");
-      glow.addColorStop(1, "rgba(13, 18, 28, 0)");
+      glow.addColorStop(0, "rgba(62, 118, 194, 0.55)");
+      glow.addColorStop(0.55, "rgba(40, 84, 146, 0.25)");
+      glow.addColorStop(1, "rgba(12, 20, 38, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
@@ -136,8 +136,8 @@ const Atmosphere = () => {
         ]);
         octx.globalCompositeOperation = r.dark ? "source-over" : "screen";
         octx.strokeStyle = r.dark
-          ? `rgba(10, 16, 28, ${r.alpha})`
-          : `rgba(206, 211, 215, ${r.alpha})`;
+          ? `rgba(8, 16, 34, ${r.alpha})`
+          : `rgba(212, 218, 224, ${r.alpha})`;
         octx.lineWidth = r.width * oh * (1 + Math.sin(t * r.speed + r.phase) * 0.12);
         octx.beginPath();
         octx.moveTo(pts[0][0], pts[0][1]);
@@ -160,8 +160,8 @@ const Atmosphere = () => {
         oh * 0.42,
         Math.max(ow, oh) * 0.85,
       );
-      vin.addColorStop(0, "rgba(8, 12, 20, 0)");
-      vin.addColorStop(1, "rgba(8, 12, 20, 0.28)");
+      vin.addColorStop(0, "rgba(7, 13, 26, 0)");
+      vin.addColorStop(1, "rgba(7, 13, 26, 0.28)");
       octx.fillStyle = vin;
       octx.fillRect(0, 0, ow, oh);
 
