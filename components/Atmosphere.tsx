@@ -93,7 +93,7 @@ const Atmosphere = () => {
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
-      octx.filter = "blur(18px)";
+      octx.filter = "blur(24px)";
       octx.lineCap = "round";
       for (const r of ribbons) {
         const pts = r.p.map(([x, y], i) => [
