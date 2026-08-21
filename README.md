@@ -1,40 +1,60 @@
+# Portfolio — filipbosnjak.dev
+
 [Live link](https://www.filipbosnjak.dev)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Personal portfolio and blog built with [Next.js](https://nextjs.org/) (App Router) and [Tailwind CSS v4](https://tailwindcss.com/).
 
-## Getting Started
+## Tech stack
 
-First, run the development server:
+- **Next.js 16** — App Router, React Server Components, `next/font`, Metadata API
+- **React 19** + **TypeScript**
+- **Tailwind CSS 4** — all styling (no Sass/CSS modules)
+- **gray-matter** — front matter parsing for blog posts
+- **googleapis** — contact form email delivery via the Gmail API
+- **react-icons** — icon set
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+app/
+  layout.tsx            # root layout, fonts, metadata
+  page.tsx              # home page (hero, about, skills, works, contact)
+  globals.css           # Tailwind theme tokens + background utilities
+  blog/page.tsx         # blog index (static)
+  blog/[slug]/page.tsx  # blog posts (SSG from posts/*.html)
+  api/sendemail/        # contact form route handler (Gmail API)
+components/             # UI components
+lib/posts.ts            # blog post loading/parsing
+posts/                  # blog posts as HTML with YAML front matter
+images/                 # statically imported images (portrait, work previews)
+public/images/          # CSS background images
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Blog posts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Add a post by dropping an `.html` file into `posts/` with YAML front matter
+(`title`, `postTitle`, `shortIntro`, `description`, `author`, `date`, `slug`,
+`minutes`, `tags`). Pages are statically generated at build time.
 
-## Learn More
+## Contact form email
 
-To learn more about Next.js, take a look at the following resources:
+The contact form sends mail through the Gmail API. Required env vars:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `GOOGLE_REFRESH_TOKEN` (one-time OAuth with scope `https://www.googleapis.com/auth/gmail.send`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Optional: `GOOGLE_REDIRECT_URI`, `GMAIL_SENDER_EMAIL`.
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Deployed on [Vercel](https://vercel.com/). `pnpm build` produces the production build.
