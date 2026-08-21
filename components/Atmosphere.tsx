@@ -39,10 +39,10 @@ const Atmosphere = () => {
 
     const ribbons: Ribbon[] = [
       // bright silk highlights
-      { p: [[-0.15, 0.3], [0.25, 0.0], [0.55, 0.35], [1.1, 0.05]], width: 0.12, alpha: 0.8, dark: false, phase: 0.4, speed: 0.05, amp: 0.03 },
-      { p: [[0.15, 1.02], [0.45, 0.55], [0.75, 0.85], [1.18, 0.42]], width: 0.16, alpha: 0.65, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
-      { p: [[0.52, 0.08], [0.68, 0.34], [0.9, 0.28], [1.08, 0.6]], width: 0.08, alpha: 0.5, dark: false, phase: 4.1, speed: 0.06, amp: 0.03 },
-      { p: [[-0.1, 0.62], [0.12, 0.42], [0.3, 0.6], [0.5, 0.5]], width: 0.09, alpha: 0.35, dark: false, phase: 5.2, speed: 0.045, amp: 0.03 },
+      { p: [[-0.15, 0.3], [0.25, 0.0], [0.55, 0.35], [1.1, 0.05]], width: 0.12, alpha: 0.6, dark: false, phase: 0.4, speed: 0.05, amp: 0.03 },
+      { p: [[0.15, 1.02], [0.45, 0.55], [0.75, 0.85], [1.18, 0.42]], width: 0.16, alpha: 0.5, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
+      { p: [[0.52, 0.08], [0.68, 0.34], [0.9, 0.28], [1.08, 0.6]], width: 0.08, alpha: 0.4, dark: false, phase: 4.1, speed: 0.06, amp: 0.03 },
+      { p: [[-0.1, 0.62], [0.12, 0.42], [0.3, 0.6], [0.5, 0.5]], width: 0.09, alpha: 0.25, dark: false, phase: 5.2, speed: 0.045, amp: 0.03 },
       // deep shadow folds
       { p: [[-0.1, 0.78], [0.3, 0.55], [0.6, 0.78], [1.12, 0.88]], width: 0.3, alpha: 0.55, dark: true, phase: 1.2, speed: 0.03, amp: 0.025 },
       { p: [[0.3, 0.14], [0.55, 0.46], [0.85, 0.08], [1.15, 0.26]], width: 0.16, alpha: 0.42, dark: true, phase: 3.4, speed: 0.045, amp: 0.03 },
@@ -93,7 +93,7 @@ const Atmosphere = () => {
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
-      octx.filter = "blur(9px)";
+      octx.filter = "blur(13px)";
       octx.lineCap = "round";
       for (const r of ribbons) {
         const pts = r.p.map(([x, y], i) => [
