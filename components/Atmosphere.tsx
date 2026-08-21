@@ -105,26 +105,26 @@ const Atmosphere = () => {
       octx.filter = "none";
       octx.globalCompositeOperation = "source-over";
 
-      // muted steel-blue base, brightest in the upper-left-center
+      // deep blue base, brightest in the upper-left-center
       const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
-      base.addColorStop(0, "#232c38");
-      base.addColorStop(0.4, "#35495f");
-      base.addColorStop(0.75, "#2b3c50");
-      base.addColorStop(1, "#10151c");
+      base.addColorStop(0, "#101f38");
+      base.addColorStop(0.4, "#1a3a63");
+      base.addColorStop(0.75, "#122946");
+      base.addColorStop(1, "#0b1524");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
       const glow = octx.createRadialGradient(
-        ow * 0.45,
-        oh * 0.32,
+        ow * 0.42,
+        oh * 0.3,
         0,
-        ow * 0.45,
-        oh * 0.32,
+        ow * 0.42,
+        oh * 0.3,
         Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(88, 116, 148, 0.55)");
-      glow.addColorStop(0.55, "rgba(58, 80, 106, 0.2)");
-      glow.addColorStop(1, "rgba(16, 21, 28, 0)");
+      glow.addColorStop(0, "rgba(52, 96, 152, 0.6)");
+      glow.addColorStop(0.55, "rgba(34, 68, 116, 0.2)");
+      glow.addColorStop(1, "rgba(10, 18, 32, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
@@ -137,8 +137,8 @@ const Atmosphere = () => {
         ]);
         octx.globalCompositeOperation = r.dark ? "source-over" : "screen";
         octx.strokeStyle = r.dark
-          ? `rgba(9, 10, 11, ${r.alpha})`
-          : `rgba(205, 206, 204, ${r.alpha})`;
+          ? `rgba(4, 9, 18, ${r.alpha})`
+          : `rgba(228, 230, 232, ${r.alpha})`;
         octx.lineWidth = r.width * oh * (1 + Math.sin(t * r.speed + r.phase) * 0.12);
         octx.beginPath();
         octx.moveTo(pts[0][0], pts[0][1]);
