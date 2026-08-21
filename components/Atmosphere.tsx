@@ -106,10 +106,10 @@ const Atmosphere = () => {
 
       // saturated cobalt-blue base, brightest in the upper-left-center
       const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
-      base.addColorStop(0, "#1a3260");
-      base.addColorStop(0.4, "#3465ad");
-      base.addColorStop(0.75, "#2a5492");
-      base.addColorStop(1, "#0d1830");
+      base.addColorStop(0, "#1d3870");
+      base.addColorStop(0.4, "#3a6fbd");
+      base.addColorStop(0.75, "#2f5da3");
+      base.addColorStop(1, "#0e1a36");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
@@ -121,9 +121,9 @@ const Atmosphere = () => {
         oh * 0.35,
         Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(74, 136, 218, 0.6)");
-      glow.addColorStop(0.55, "rgba(48, 98, 170, 0.28)");
-      glow.addColorStop(1, "rgba(13, 24, 48, 0)");
+      glow.addColorStop(0, "rgba(86, 148, 230, 0.62)");
+      glow.addColorStop(0.55, "rgba(54, 108, 184, 0.3)");
+      glow.addColorStop(1, "rgba(14, 26, 54, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 

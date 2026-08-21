@@ -156,9 +156,10 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
       ctx.clearRect(0, 0, width, height);
 
       for (const p of dots) {
-        // gentle idle wobble around home
-        const tx = p.hx + Math.cos(t * p.freq + p.phase) * p.amp;
-        const ty = p.hy + Math.sin(t * p.freq * 0.85 + p.phase) * p.amp;
+        // tiles rest in place; a whisper of drift only while disturbed
+        const drift = p.ag * p.amp;
+        const tx = p.hx + Math.cos(t * p.freq + p.phase) * drift;
+        const ty = p.hy + Math.sin(t * p.freq * 0.85 + p.phase) * drift;
         p.vx += (tx - p.x) * 0.03;
         p.vy += (ty - p.y) * 0.03;
 
@@ -180,12 +181,12 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        const pulse = 0.85 + Math.sin(t * 1.2 + p.phase) * 0.15;
-        // square dot at rest; agitated dots become round glowing particles
-        ctx.fillStyle = `rgba(198, 212, 230, ${Math.min(1, p.a * pulse * (1 + p.ag * 1.4))})`;
-        if (p.ag > 0.08) {
+        // steady square tile at rest; only cursor-disturbed dots soften
+        // into round particles, with no pulsing or size pop
+        ctx.fillStyle = `rgba(198, 212, 230, ${Math.min(1, p.a * (1 + p.ag * 0.25))})`;
+        if (p.ag > 0.12) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, (p.size / 2) * (1 + p.ag * 0.9), 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
           ctx.fill();
         } else {
           ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
