@@ -14,6 +14,7 @@ type Dot = {
   phase: number;
   freq: number;
   amp: number;
+  ag: number; // 0 = square at rest, 1 = fully agitated round particle
 };
 
 const sampleTextPoints = (
@@ -34,7 +35,7 @@ const sampleTextPoints = (
   const fontSize = Math.min(width * 0.2, height * 0.34, 260);
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = "#fff";
-  ctx.font = `600 ${fontSize}px ${family}, Montserrat, sans-serif`;
+  ctx.font = `800 ${fontSize}px ${family}, Montserrat, sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.letterSpacing = `${Math.round(fontSize * 0.04)}px`;
@@ -130,11 +131,12 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
           y: height * 0.5 + Math.sin(angle) * dist,
           vx: 0,
           vy: 0,
-          size: Math.random() < 0.3 ? 3 : 2,
+          size: Math.random() < 0.3 ? 4 : 3,
           a,
           phase: Math.random() * Math.PI * 2,
           freq: 0.4 + Math.random() * 0.8,
           amp: 1.5 + Math.random() * 3.5,
+          ag: 0,
         };
       });
     };
@@ -163,8 +165,10 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
             const f = ((REPEL_RADIUS - d) / REPEL_RADIUS) * REPEL_FORCE;
             p.vx += (dx / d) * f;
             p.vy += (dy / d) * f;
+            p.ag = Math.min(1, p.ag + 0.18);
           }
         }
+        p.ag *= 0.955;
 
         p.vx *= 0.86;
         p.vy *= 0.86;
@@ -172,8 +176,15 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
         p.y += p.vy;
 
         const pulse = 0.85 + Math.sin(t * 1.2 + p.phase) * 0.15;
-        ctx.fillStyle = `rgba(198, 212, 230, ${p.a * pulse})`;
-        ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+        // square dot at rest; agitated dots become round glowing particles
+        ctx.fillStyle = `rgba(198, 212, 230, ${p.a * pulse * (1 + p.ag * 0.8)})`;
+        if (p.ag > 0.08) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, (p.size / 2) * (1 + p.ag * 0.5), 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+        }
       }
 
       frame = requestAnimationFrame(draw);
