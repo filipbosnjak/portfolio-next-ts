@@ -49,6 +49,41 @@ const Atmosphere = () => {
       { p: [[-0.12, 0.1], [0.1, 0.25], [0.25, 0.05], [0.45, 0.18]], width: 0.14, alpha: 0.34, dark: true, phase: 0.9, speed: 0.035, amp: 0.025 },
     ];
 
+    // faint constellation in the upper-middle, after the reference hero
+    const nodes: [number, number][] = [
+      [0.44, 0.1], [0.52, 0.06], [0.6, 0.11], [0.68, 0.07],
+      [0.48, 0.19], [0.56, 0.23], [0.64, 0.18], [0.72, 0.15],
+      [0.53, 0.31], [0.61, 0.29], [0.69, 0.26], [0.43, 0.26],
+    ];
+    const edges: [number, number][] = [
+      [0, 1], [1, 2], [2, 3], [0, 4], [1, 5], [2, 6], [3, 7],
+      [4, 5], [5, 6], [6, 7], [4, 11], [5, 8], [6, 9], [7, 10],
+      [8, 9], [9, 10], [11, 8],
+    ];
+
+    const drawConstellation = (t: number) => {
+      const pos = nodes.map(([x, y], i) => [
+        (x + Math.sin(t * 0.05 + i * 1.3) * 0.006) * width,
+        (y + Math.cos(t * 0.04 + i * 2.1) * 0.006) * height,
+      ]);
+      ctx.save();
+      ctx.strokeStyle = "rgba(160, 190, 230, 0.07)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (const [a, b] of edges) {
+        ctx.moveTo(pos[a][0], pos[a][1]);
+        ctx.lineTo(pos[b][0], pos[b][1]);
+      }
+      ctx.stroke();
+      ctx.fillStyle = "rgba(190, 210, 240, 0.2)";
+      for (const [x, y] of pos) {
+        ctx.beginPath();
+        ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
     const resize = () => {
       const parent = canvas.parentElement;
       width = parent?.clientWidth || window.innerWidth;
@@ -70,26 +105,26 @@ const Atmosphere = () => {
       octx.filter = "none";
       octx.globalCompositeOperation = "source-over";
 
-      // deep blue base, brightest in the upper-left-center
+      // muted steel-blue base, brightest in the upper-left-center
       const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
-      base.addColorStop(0, "#101f38");
-      base.addColorStop(0.4, "#1a3a63");
-      base.addColorStop(0.75, "#122946");
-      base.addColorStop(1, "#0b1524");
+      base.addColorStop(0, "#232c38");
+      base.addColorStop(0.4, "#35495f");
+      base.addColorStop(0.75, "#2b3c50");
+      base.addColorStop(1, "#10151c");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
       const glow = octx.createRadialGradient(
-        ow * 0.42,
-        oh * 0.3,
+        ow * 0.45,
+        oh * 0.32,
         0,
-        ow * 0.42,
-        oh * 0.3,
+        ow * 0.45,
+        oh * 0.32,
         Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(52, 96, 152, 0.6)");
-      glow.addColorStop(0.55, "rgba(34, 68, 116, 0.2)");
-      glow.addColorStop(1, "rgba(10, 18, 32, 0)");
+      glow.addColorStop(0, "rgba(88, 116, 148, 0.55)");
+      glow.addColorStop(0.55, "rgba(58, 80, 106, 0.2)");
+      glow.addColorStop(1, "rgba(16, 21, 28, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
@@ -102,8 +137,8 @@ const Atmosphere = () => {
         ]);
         octx.globalCompositeOperation = r.dark ? "source-over" : "screen";
         octx.strokeStyle = r.dark
-          ? `rgba(4, 9, 18, ${r.alpha})`
-          : `rgba(228, 230, 232, ${r.alpha})`;
+          ? `rgba(9, 10, 11, ${r.alpha})`
+          : `rgba(205, 206, 204, ${r.alpha})`;
         octx.lineWidth = r.width * oh * (1 + Math.sin(t * r.speed + r.phase) * 0.12);
         octx.beginPath();
         octx.moveTo(pts[0][0], pts[0][1]);
@@ -167,6 +202,7 @@ const Atmosphere = () => {
       ctx.drawImage(off, 0, 0, ow, oh, 0, 0, width, height);
 
       drawGrid();
+      drawConstellation(t);
 
       frame = requestAnimationFrame(draw);
     };
