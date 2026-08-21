@@ -38,15 +38,14 @@ const Atmosphere = () => {
     const start = performance.now();
 
     const ribbons: Ribbon[] = [
-      // bright silk highlights
-      { p: [[-0.15, 0.3], [0.25, 0.0], [0.55, 0.35], [1.1, 0.05]], width: 0.12, alpha: 0.6, dark: false, phase: 0.4, speed: 0.05, amp: 0.03 },
-      { p: [[0.15, 1.02], [0.45, 0.55], [0.75, 0.85], [1.18, 0.42]], width: 0.16, alpha: 0.5, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
-      { p: [[0.52, 0.08], [0.68, 0.34], [0.9, 0.28], [1.08, 0.6]], width: 0.08, alpha: 0.4, dark: false, phase: 4.1, speed: 0.06, amp: 0.03 },
-      { p: [[-0.1, 0.62], [0.12, 0.42], [0.3, 0.6], [0.5, 0.5]], width: 0.09, alpha: 0.25, dark: false, phase: 5.2, speed: 0.045, amp: 0.03 },
-      // deep shadow folds
-      { p: [[-0.1, 0.78], [0.3, 0.55], [0.6, 0.78], [1.12, 0.88]], width: 0.3, alpha: 0.48, dark: true, phase: 1.2, speed: 0.03, amp: 0.025 },
-      { p: [[0.3, 0.14], [0.55, 0.46], [0.85, 0.08], [1.15, 0.26]], width: 0.16, alpha: 0.36, dark: true, phase: 3.4, speed: 0.045, amp: 0.03 },
-      { p: [[-0.12, 0.1], [0.1, 0.25], [0.25, 0.05], [0.45, 0.18]], width: 0.14, alpha: 0.34, dark: true, phase: 0.9, speed: 0.035, amp: 0.025 },
+      // big bright smoke clouds, like the reference's white silk
+      { p: [[0.55, 0.02], [0.75, 0.14], [0.95, 0.02], [1.15, 0.2]], width: 0.22, alpha: 0.75, dark: false, phase: 0.4, speed: 0.05, amp: 0.03 },
+      { p: [[-0.18, 0.32], [0.05, 0.12], [0.2, 0.4], [0.38, 0.22]], width: 0.16, alpha: 0.55, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
+      { p: [[0.15, 1.05], [0.4, 0.7], [0.72, 0.95], [1.18, 0.55]], width: 0.2, alpha: 0.6, dark: false, phase: 4.1, speed: 0.045, amp: 0.03 },
+      { p: [[0.6, 0.5], [0.8, 0.36], [1.0, 0.55], [1.16, 0.42]], width: 0.12, alpha: 0.4, dark: false, phase: 5.2, speed: 0.055, amp: 0.03 },
+      // soft shadow folds
+      { p: [[-0.1, 0.82], [0.3, 0.6], [0.6, 0.82], [1.12, 0.92]], width: 0.24, alpha: 0.35, dark: true, phase: 1.2, speed: 0.03, amp: 0.025 },
+      { p: [[0.25, 0.2], [0.5, 0.42], [0.8, 0.14], [1.1, 0.3]], width: 0.13, alpha: 0.26, dark: true, phase: 3.4, speed: 0.045, amp: 0.03 },
     ];
 
     // faint constellation in the upper-middle, after the reference hero
@@ -105,26 +104,26 @@ const Atmosphere = () => {
       octx.filter = "none";
       octx.globalCompositeOperation = "source-over";
 
-      // deep blue base, brightest in the upper-left-center
+      // medium slate-blue base, brightest in the upper-left-center
       const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
-      base.addColorStop(0, "#101f38");
-      base.addColorStop(0.4, "#1a3a63");
-      base.addColorStop(0.75, "#122946");
-      base.addColorStop(1, "#0b1524");
+      base.addColorStop(0, "#1c2c47");
+      base.addColorStop(0.4, "#31507c");
+      base.addColorStop(0.75, "#294261");
+      base.addColorStop(1, "#0d121c");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
       const glow = octx.createRadialGradient(
         ow * 0.42,
-        oh * 0.3,
+        oh * 0.35,
         0,
         ow * 0.42,
-        oh * 0.3,
+        oh * 0.35,
         Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(52, 96, 152, 0.6)");
-      glow.addColorStop(0.55, "rgba(34, 68, 116, 0.2)");
-      glow.addColorStop(1, "rgba(10, 18, 32, 0)");
+      glow.addColorStop(0, "rgba(92, 130, 178, 0.5)");
+      glow.addColorStop(0.55, "rgba(56, 88, 130, 0.22)");
+      glow.addColorStop(1, "rgba(13, 18, 28, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
@@ -137,8 +136,8 @@ const Atmosphere = () => {
         ]);
         octx.globalCompositeOperation = r.dark ? "source-over" : "screen";
         octx.strokeStyle = r.dark
-          ? `rgba(4, 9, 18, ${r.alpha})`
-          : `rgba(228, 230, 232, ${r.alpha})`;
+          ? `rgba(10, 16, 28, ${r.alpha})`
+          : `rgba(206, 211, 215, ${r.alpha})`;
         octx.lineWidth = r.width * oh * (1 + Math.sin(t * r.speed + r.phase) * 0.12);
         octx.beginPath();
         octx.moveTo(pts[0][0], pts[0][1]);
@@ -162,12 +161,12 @@ const Atmosphere = () => {
         Math.max(ow, oh) * 0.85,
       );
       vin.addColorStop(0, "rgba(8, 12, 20, 0)");
-      vin.addColorStop(1, "rgba(8, 12, 20, 0.4)");
+      vin.addColorStop(1, "rgba(8, 12, 20, 0.28)");
       octx.fillStyle = vin;
       octx.fillRect(0, 0, ow, oh);
 
       // settle into the page background at the bottom
-      const fade = octx.createLinearGradient(0, oh * 0.62, 0, oh);
+      const fade = octx.createLinearGradient(0, oh * 0.72, 0, oh);
       fade.addColorStop(0, "rgba(10, 10, 10, 0)");
       fade.addColorStop(1, "rgba(10, 10, 10, 1)");
       octx.fillStyle = fade;
