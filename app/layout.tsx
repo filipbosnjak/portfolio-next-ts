@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fragment_Mono, Host_Grotesk, Montserrat } from "next/font/google";
-import Atmosphere from "@/components/Atmosphere";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -47,7 +46,6 @@ export default function RootLayout({
       className={`${dmSans.variable} ${montserrat.variable} ${fragmentMono.variable} ${hostGrotesk.variable}`}
     >
       <body className="font-sans antialiased">
-        <Atmosphere />
         <div className="relative z-10">{children}</div>
       </body>
     </html>

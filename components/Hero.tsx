@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Atmosphere from "@/components/Atmosphere";
+import ParticleMark from "@/components/ParticleMark";
 import { site } from "@/lib/site";
 
 const commands = {
@@ -60,8 +62,13 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative flex min-h-svh w-full items-center">
-      <div className="ds-container grid grid-cols-1 items-center gap-20 pt-40 pb-40 md:grid-cols-[60fr_40fr]">
+    <section className="relative flex min-h-svh w-full items-center overflow-hidden">
+      <Atmosphere />
+      <div className="pointer-events-none absolute inset-0 z-[5] hidden md:block">
+        <ParticleMark />
+      </div>
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#0a0a0a]/55 via-[#0a0a0a]/15 to-transparent md:from-[#0a0a0a]/40 md:via-transparent" />
+      <div className="ds-container relative z-10 grid grid-cols-1 items-center gap-20 pt-40 pb-40 md:grid-cols-[60fr_40fr]">
         <div className="order-1 flex flex-col gap-10">
           <div
             className="hero-enter flex flex-col items-start gap-4"
