@@ -106,10 +106,10 @@ const Atmosphere = () => {
 
       // saturated cobalt-blue base, brightest in the upper-left-center
       const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
-      base.addColorStop(0, "#172c50");
-      base.addColorStop(0.4, "#2e5a96");
-      base.addColorStop(0.75, "#254b7e");
-      base.addColorStop(1, "#0c1526");
+      base.addColorStop(0, "#1a3260");
+      base.addColorStop(0.4, "#3465ad");
+      base.addColorStop(0.75, "#2a5492");
+      base.addColorStop(1, "#0d1830");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
@@ -121,9 +121,9 @@ const Atmosphere = () => {
         oh * 0.35,
         Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(62, 118, 194, 0.55)");
-      glow.addColorStop(0.55, "rgba(40, 84, 146, 0.25)");
-      glow.addColorStop(1, "rgba(12, 20, 38, 0)");
+      glow.addColorStop(0, "rgba(74, 136, 218, 0.6)");
+      glow.addColorStop(0.55, "rgba(48, 98, 170, 0.28)");
+      glow.addColorStop(1, "rgba(13, 24, 48, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
@@ -137,7 +137,7 @@ const Atmosphere = () => {
         octx.globalCompositeOperation = r.dark ? "source-over" : "screen";
         octx.strokeStyle = r.dark
           ? `rgba(8, 16, 34, ${r.alpha})`
-          : `rgba(212, 218, 224, ${r.alpha})`;
+          : `rgba(213, 222, 233, ${r.alpha})`;
         octx.lineWidth = r.width * oh * (1 + Math.sin(t * r.speed + r.phase) * 0.12);
         octx.beginPath();
         octx.moveTo(pts[0][0], pts[0][1]);
