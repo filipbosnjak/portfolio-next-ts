@@ -67,7 +67,9 @@ const Hero = () => {
       <div className="pointer-events-none absolute inset-0 z-[5] hidden md:block">
         <ParticleMark />
       </div>
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#0a0a0a]/65 via-[#0a0a0a]/20 to-transparent md:from-[#0a0a0a]/55 md:via-[#0a0a0a]/10" />
+      {/* frosted glass pane over the particle animation so the copy stays readable */}
+      <div className="pointer-events-none absolute inset-0 z-[6] bg-[#0a0a0a]/10 backdrop-blur-[4px]" />
+      <div className="pointer-events-none absolute inset-0 z-[7] bg-gradient-to-r from-[#0a0a0a]/65 via-[#0a0a0a]/20 to-transparent md:from-[#0a0a0a]/55 md:via-[#0a0a0a]/10" />
       <div className="ds-container relative z-10 grid grid-cols-1 items-center gap-20 pt-40 pb-40 md:grid-cols-[60fr_40fr]">
         <div className="order-1 flex flex-col gap-10">
           <div
