@@ -23,7 +23,7 @@ const fragmentMono = Fragment_Mono({
 const hostGrotesk = Host_Grotesk({
   subsets: ["latin", "latin-ext"],
   variable: "--font-host",
-  weight: ["500", "600"],
+  weight: ["500", "600", "800"],
 });
 
 export const metadata: Metadata = {
