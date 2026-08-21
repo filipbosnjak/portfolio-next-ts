@@ -2,30 +2,19 @@
 
 import { useEffect, useRef } from "react";
 
-type Puff = {
-  x: number; // 0..1 relative
-  y: number;
-  rx: number; // relative radius
-  ry: number;
-  rot: number;
+type Ribbon = {
+  p: [number, number][]; // 4 bezier control points, relative coords
+  width: number; // relative to canvas height
   alpha: number;
+  dark: boolean;
   phase: number;
   speed: number;
-  drift: number;
-  dark: boolean;
+  amp: number;
 };
 
-type Speck = {
-  x: number;
-  y: number;
-  r: number;
-  vx: number;
-  vy: number;
-  a: number;
-};
-
-// Deep-blue smoke field after the DeepSeek Harness hero. The smoke is drawn on
-// a low-res offscreen canvas and upscaled — the blur comes free.
+// Glassy silk-smoke field after the DeepSeek Harness hero. The ribbons are
+// fat bezier strokes drawn on a tiny offscreen canvas and upscaled, so the
+// heavy blur that makes them read as frosted glass is nearly free.
 const Atmosphere = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -45,20 +34,19 @@ const Atmosphere = () => {
     let height = 0;
     let ow = 0;
     let oh = 0;
-    let specks: Speck[] = [];
     let running = true;
     const start = performance.now();
 
-    const puffs: Puff[] = [
-      // bright cloud wisps
-      { x: 0.62, y: 0.2, rx: 0.5, ry: 0.14, rot: -0.35, alpha: 0.3, phase: 0.3, speed: 0.045, drift: 0.09, dark: false },
-      { x: 0.38, y: 0.5, rx: 0.44, ry: 0.11, rot: 0.25, alpha: 0.22, phase: 1.7, speed: 0.035, drift: 0.11, dark: false },
-      { x: 0.82, y: 0.55, rx: 0.36, ry: 0.1, rot: -0.15, alpha: 0.24, phase: 3.1, speed: 0.05, drift: 0.08, dark: false },
-      { x: 0.18, y: 0.16, rx: 0.32, ry: 0.1, rot: 0.4, alpha: 0.16, phase: 4.4, speed: 0.04, drift: 0.1, dark: false },
-      { x: 0.52, y: 0.72, rx: 0.4, ry: 0.1, rot: 0.1, alpha: 0.15, phase: 5.5, speed: 0.03, drift: 0.09, dark: false },
-      // dark pockets for depth
-      { x: 0.12, y: 0.65, rx: 0.34, ry: 0.2, rot: 0.2, alpha: 0.5, phase: 2.2, speed: 0.028, drift: 0.06, dark: true },
-      { x: 0.9, y: 0.12, rx: 0.3, ry: 0.18, rot: -0.3, alpha: 0.42, phase: 0.9, speed: 0.033, drift: 0.05, dark: true },
+    const ribbons: Ribbon[] = [
+      // bright silk highlights
+      { p: [[-0.15, 0.3], [0.25, 0.0], [0.55, 0.35], [1.1, 0.05]], width: 0.12, alpha: 0.8, dark: false, phase: 0.4, speed: 0.05, amp: 0.03 },
+      { p: [[0.15, 1.02], [0.45, 0.55], [0.75, 0.85], [1.18, 0.42]], width: 0.16, alpha: 0.65, dark: false, phase: 2.3, speed: 0.04, amp: 0.035 },
+      { p: [[0.52, 0.08], [0.68, 0.34], [0.9, 0.28], [1.08, 0.6]], width: 0.08, alpha: 0.5, dark: false, phase: 4.1, speed: 0.06, amp: 0.03 },
+      { p: [[-0.1, 0.62], [0.12, 0.42], [0.3, 0.6], [0.5, 0.5]], width: 0.09, alpha: 0.35, dark: false, phase: 5.2, speed: 0.045, amp: 0.03 },
+      // deep shadow folds
+      { p: [[-0.1, 0.78], [0.3, 0.55], [0.6, 0.78], [1.12, 0.88]], width: 0.3, alpha: 0.55, dark: true, phase: 1.2, speed: 0.03, amp: 0.025 },
+      { p: [[0.3, 0.14], [0.55, 0.46], [0.85, 0.08], [1.15, 0.26]], width: 0.16, alpha: 0.42, dark: true, phase: 3.4, speed: 0.045, amp: 0.03 },
+      { p: [[-0.12, 0.1], [0.1, 0.25], [0.25, 0.05], [0.45, 0.18]], width: 0.14, alpha: 0.4, dark: true, phase: 0.9, speed: 0.035, amp: 0.025 },
     ];
 
     const resize = () => {
@@ -72,82 +60,79 @@ const Atmosphere = () => {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      ow = Math.max(160, Math.floor(width / 5));
-      oh = Math.max(120, Math.floor(height / 5));
+      ow = Math.max(150, Math.floor(width / 6));
+      oh = Math.max(100, Math.floor(height / 6));
       off.width = ow;
       off.height = oh;
-
-      const count = width < 768 ? 50 : 100;
-      specks = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 1.3 + 0.5,
-        vx: (Math.random() - 0.5) * 0.16,
-        vy: (Math.random() - 0.5) * 0.16,
-        a: Math.random() * 0.26 + 0.14,
-      }));
     };
 
     const drawSmoke = (t: number) => {
-      // deep blue base — brighter around the upper middle, dark corners
-      const base = octx.createLinearGradient(0, 0, ow * 0.3, oh);
-      base.addColorStop(0, "#0e1c33");
-      base.addColorStop(0.45, "#16345e");
-      base.addColorStop(0.8, "#122a4d");
-      base.addColorStop(1, "#0b1220");
-      octx.globalCompositeOperation = "source-over";
       octx.filter = "none";
+      octx.globalCompositeOperation = "source-over";
+
+      // deep blue base, brightest in the upper-left-center
+      const base = octx.createLinearGradient(0, 0, ow, oh * 0.9);
+      base.addColorStop(0, "#101f38");
+      base.addColorStop(0.4, "#1a3a63");
+      base.addColorStop(0.75, "#122946");
+      base.addColorStop(1, "#0b1524");
       octx.fillStyle = base;
       octx.fillRect(0, 0, ow, oh);
 
       const glow = octx.createRadialGradient(
-        ow * 0.6,
-        oh * 0.35,
+        ow * 0.42,
+        oh * 0.3,
         0,
-        ow * 0.6,
-        oh * 0.35,
-        Math.max(ow, oh) * 0.75,
+        ow * 0.42,
+        oh * 0.3,
+        Math.max(ow, oh) * 0.7,
       );
-      glow.addColorStop(0, "rgba(58, 106, 165, 0.55)");
-      glow.addColorStop(0.5, "rgba(38, 76, 128, 0.22)");
+      glow.addColorStop(0, "rgba(52, 96, 152, 0.6)");
+      glow.addColorStop(0.55, "rgba(34, 68, 116, 0.2)");
       glow.addColorStop(1, "rgba(10, 18, 32, 0)");
       octx.fillStyle = glow;
       octx.fillRect(0, 0, ow, oh);
 
-      octx.filter = "blur(10px)";
-      for (const p of puffs) {
-        const cx = (p.x + Math.cos(t * p.speed + p.phase) * p.drift) * ow;
-        const cy = (p.y + Math.sin(t * p.speed * 0.8 + p.phase) * p.drift * 0.7) * oh;
-        const rot = p.rot + Math.sin(t * p.speed * 0.5 + p.phase) * 0.15;
-        const rx = p.rx * ow;
-        const ry = p.ry * oh * (1 + Math.sin(t * p.speed * 0.6 + p.phase) * 0.2);
-
-        octx.save();
-        octx.translate(cx, cy);
-        octx.rotate(rot);
-        const g = octx.createRadialGradient(0, 0, 0, 0, 0, 1);
-        if (p.dark) {
-          octx.globalCompositeOperation = "source-over";
-          g.addColorStop(0, `rgba(8, 14, 26, ${p.alpha})`);
-          g.addColorStop(1, "rgba(8, 14, 26, 0)");
-        } else {
-          octx.globalCompositeOperation = "screen";
-          g.addColorStop(0, `rgba(196, 212, 228, ${p.alpha})`);
-          g.addColorStop(0.55, `rgba(150, 175, 205, ${p.alpha * 0.4})`);
-          g.addColorStop(1, "rgba(150, 175, 205, 0)");
-        }
-        octx.scale(rx, ry);
-        octx.fillStyle = g;
+      octx.filter = "blur(9px)";
+      octx.lineCap = "round";
+      for (const r of ribbons) {
+        const pts = r.p.map(([x, y], i) => [
+          (x + Math.sin(t * r.speed + r.phase + i * 1.7) * r.amp) * ow,
+          (y + Math.cos(t * r.speed * 0.8 + r.phase + i * 2.1) * r.amp) * oh,
+        ]);
+        octx.globalCompositeOperation = r.dark ? "source-over" : "screen";
+        octx.strokeStyle = r.dark
+          ? `rgba(4, 9, 18, ${r.alpha})`
+          : `rgba(228, 230, 232, ${r.alpha})`;
+        octx.lineWidth = r.width * oh * (1 + Math.sin(t * r.speed + r.phase) * 0.12);
         octx.beginPath();
-        octx.arc(0, 0, 1, 0, Math.PI * 2);
-        octx.fill();
-        octx.restore();
+        octx.moveTo(pts[0][0], pts[0][1]);
+        octx.bezierCurveTo(
+          pts[1][0], pts[1][1],
+          pts[2][0], pts[2][1],
+          pts[3][0], pts[3][1],
+        );
+        octx.stroke();
       }
       octx.filter = "none";
       octx.globalCompositeOperation = "source-over";
 
+      // vignette so the edges sink into shadow like frosted glass
+      const vin = octx.createRadialGradient(
+        ow * 0.5,
+        oh * 0.42,
+        Math.min(ow, oh) * 0.3,
+        ow * 0.5,
+        oh * 0.42,
+        Math.max(ow, oh) * 0.85,
+      );
+      vin.addColorStop(0, "rgba(8, 12, 20, 0)");
+      vin.addColorStop(1, "rgba(8, 12, 20, 0.4)");
+      octx.fillStyle = vin;
+      octx.fillRect(0, 0, ow, oh);
+
       // settle into the page background at the bottom
-      const fade = octx.createLinearGradient(0, oh * 0.55, 0, oh);
+      const fade = octx.createLinearGradient(0, oh * 0.62, 0, oh);
       fade.addColorStop(0, "rgba(10, 10, 10, 0)");
       fade.addColorStop(1, "rgba(10, 10, 10, 1)");
       octx.fillStyle = fade;
@@ -157,7 +142,7 @@ const Atmosphere = () => {
     const drawGrid = () => {
       const step = 56;
       ctx.save();
-      ctx.strokeStyle = "rgba(180, 205, 255, 0.05)";
+      ctx.strokeStyle = "rgba(180, 205, 255, 0.035)";
       ctx.lineWidth = 1;
       ctx.beginPath();
       for (let x = 0; x <= width; x += step) {
@@ -182,24 +167,6 @@ const Atmosphere = () => {
       ctx.drawImage(off, 0, 0, ow, oh, 0, 0, width, height);
 
       drawGrid();
-
-      ctx.save();
-      ctx.globalCompositeOperation = "lighter";
-      for (const p of specks) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -8) p.x = width + 8;
-        if (p.x > width + 8) p.x = -8;
-        if (p.y < -8) p.y = height + 8;
-        if (p.y > height + 8) p.y = -8;
-
-        const pulse = 0.75 + Math.sin(t * 1.8 + p.x * 0.01) * 0.25;
-        ctx.fillStyle = `rgba(210, 228, 255, ${p.a * pulse})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.restore();
 
       frame = requestAnimationFrame(draw);
     };
