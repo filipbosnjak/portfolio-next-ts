@@ -1,286 +1,143 @@
-import React from "react";
-import styles from "../styles/components/Works.module.scss";
-import Image from "next/image";
-import chatApp from "../images/works/chatApp.png";
-import gameoflife from "../images/works/gameoflife.png";
-import kotlingraphqlapi from "../images/works/kotlingraphqlapi.png";
-import apachekafkanodejs from "../images/works/apachekafkanodejs.png"
-import kotlinds from "../images/works/kotlinds.png"
-import javagmailreader from "../images/works/javagmailreader.png"
-import springsecurityjwt from "../images/works/springsecurityjwt.png"
-import electronwappbot from "../images/works/electronwhatsappbot.png"
-import crudhilla from "../images/works/crudhilla.png"
-import auth from "../images/works/auth.jpg"
+import Image, { type StaticImageData } from "next/image";
+import auth from "@/images/works/auth.jpg";
+import gameoflife from "@/images/works/gameoflife.png";
+import crudhilla from "@/images/works/crudhilla.png";
+import kotlingraphqlapi from "@/images/works/kotlingraphqlapi.png";
+import electronwappbot from "@/images/works/electronwhatsappbot.png";
+import apachekafkanodejs from "@/images/works/apachekafkanodejs.png";
+import kotlinds from "@/images/works/kotlinds.png";
+import javagmailreader from "@/images/works/javagmailreader.png";
+import springsecurityjwt from "@/images/works/springsecurityjwt.png";
+import chatApp from "@/images/works/chatApp.png";
+import Badge from "@/components/Badge";
+import Reveal from "@/components/Reveal";
+import { site } from "@/lib/site";
 
+type Work = {
+  title: string;
+  stack: string;
+  href: string;
+  image: StaticImageData;
+};
+
+const works: Work[] = [
+  {
+    title: "Authentication & Registration",
+    stack: "Next.js · TypeScript · Next-Auth · Prisma",
+    href: "https://next-auth-starter-two.vercel.app/",
+    image: auth,
+  },
+  {
+    title: "Game of life",
+    stack: "Next.js · TypeScript",
+    href: "https://game-of-life-nextjs-ts.vercel.app/",
+    image: gameoflife,
+  },
+  {
+    title: "Simple CRUD App",
+    stack: "React · Spring Boot · Hilla",
+    href: "https://spring-boot-react-hilla-production.up.railway.app/",
+    image: crudhilla,
+  },
+  {
+    title: "Kotlin/GraphQL API Starter",
+    stack: "Kotlin · GraphQL (DGS)",
+    href: "https://github.com/filipbosnjak/kotlin-graphql-api",
+    image: kotlingraphqlapi,
+  },
+  {
+    title: "WhatsApp Bot with Electron",
+    stack: "Electron · Vite · TypeScript",
+    href: "https://github.com/filipbosnjak/wapp-bot1",
+    image: electronwappbot,
+  },
+  {
+    title: "Apache Kafka & Node.js",
+    stack: "Apache Kafka · Node.js · TypeScript",
+    href: "https://github.com/filipbosnjak/apache-kafka-typescript-node",
+    image: apachekafkanodejs,
+  },
+  {
+    title: "Data Structures in Kotlin",
+    stack: "Kotlin",
+    href: "https://github.com/filipbosnjak/kotlin-data-structures",
+    image: kotlinds,
+  },
+  {
+    title: "Gmail Reader in Java",
+    stack: "Java · Gmail API",
+    href: "https://github.com/filipbosnjak/java-gmail-reader",
+    image: javagmailreader,
+  },
+  {
+    title: "Spring Security & JWT",
+    stack: "Java · Spring Security · JWT",
+    href: "https://github.com/filipbosnjak/spring-security-jwt",
+    image: springsecurityjwt,
+  },
+  {
+    title: "Realtime Chat App",
+    stack: "React · Firebase · Redux",
+    href: "http://dominis.phy.hr/~fbosnjak/ChatApp/",
+    image: chatApp,
+  },
+];
 
 const Works = () => {
   return (
-      <section className={`${styles.works} ${styles.light} ${styles.section}`}>
-          <div id="works">
-              <h1 className={`${styles.sectionTitle} ${styles.title4}`}>My Work</h1>
-              <h2 className={styles.subtitle}>For more backend projects checkout my <a target="_blank" href="https://github.com/filipbosnjak" className={styles.github}>Github.</a></h2>
-              <div className={styles.works}>
-                  <a
-                      href='https://next-auth-starter-two.vercel.app/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={auth}
-                          alt='gameoflife'
-                          className={styles.aboutPic}
-                      />
-                      <div className={styles.info}>
-                          <h3>Authentication & Registration</h3>
-                          <div className={styles.cat}>Nextjs | Typescript | Next-Auth | Prisma</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://game-of-life-nextjs-ts.vercel.app/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={gameoflife}
-                          alt='gameoflife'
-                          className={styles.aboutPic}
-                      />
-                      <div className={styles.info}>
-                          <h3>Game of life</h3>
-                          <div className={styles.cat}>Nextjs | Typescript</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://spring-boot-react-hilla-production.up.railway.app/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={crudhilla}
-                          alt='crudhilla'
-                          className={styles.aboutPic}
-                      />
-                      <div className={styles.info}>
-                          <h3>Simple CRUD App</h3>
-                          <div className={styles.cat}>React | Spring Boot | Hilla</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://github.com/filipbosnjak/kotlin-graphql-api'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={kotlingraphqlapi}
-                          alt='kotlingraphqlapi'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Kotlin/GraphQL API Starter</h3>
-                          <div className={styles.cat}>Kotlin, GraphQL (DGS - Netflix)</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://github.com/filipbosnjak/wapp-bot1'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={electronwappbot}
-                          alt='electronwappbot'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Whatsapp Bot with Electron</h3>
-                          <div className={styles.cat}>Electron, Vite, Typescript</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://github.com/filipbosnjak/apache-kafka-typescript-node'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={apachekafkanodejs}
-                          alt='apachekafkanodejs'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Apache Kafka & Nodejs Integration</h3>
-                          <div className={styles.cat}>Apache Kafka, Nodejs, Typescript</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://github.com/filipbosnjak/kotlin-data-structures'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={kotlinds}
-                          alt='kotlinds'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Data Structures & Algorithms in Kotlin</h3>
-                          <div className={styles.cat}>Kotlin</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://github.com/filipbosnjak/java-gmail-reader'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={javagmailreader}
-                          alt='javagmailreader'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Gmail Reader in Java</h3>
-                          <div className={styles.cat}>Java, Google Gmail API</div>
-                      </div>
-                  </a>
-                  <a
-                      href='https://github.com/filipbosnjak/spring-security-jwt'
-                      className={styles.work}
-                      target='_blank'>
-                      <Image
-                          src={springsecurityjwt}
-                          alt='springsecurityjwt'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Spring Security & JWT</h3>
-                          <div className={styles.cat}>Java, Spring Security, JWT</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/ChatApp/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={chatApp}
-                          alt='chatApp'
-                          className={styles.aboutPic}
-                      />
-                      <div className={styles.info}>
-                          <h3>Realtime Chat App</h3>
-                          <div className={styles.cat}>Reactjs | Firebase & Redux</div>
-                      </div>
-                  </a>
+    <section id="works" className="ds-container scroll-mt-24 py-[120px]">
+      <div className="flex flex-col items-start">
+        <Reveal>
+          <Badge>Selected work</Badge>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="ds-text-heading mt-4 mb-4 max-w-[680px] text-white">
+            Projects that made it out of the editor.
+          </h2>
+        </Reveal>
+        <Reveal delay={120}>
+          <p className="ds-text-body mb-14 max-w-[560px] text-ds-description">
+            Frontend, backend, and the wiring in between. For more backend work,
+            see{" "}
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noreferrer"
+              className="text-white transition-opacity hover:opacity-70"
+            >
+              GitHub
+            </a>
+            .
+          </p>
+        </Reveal>
+      </div>
 
-                  {/*<div style={{color: "white"}}>Some legacy fronted mini projects :)</div><br/>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/weather-app/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={weatherApp}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />
-                      <div className={styles.info}>
-                          <h3>Weather App</h3>
-                          <div className={styles.cat}>Reactjs | Redux</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/PizzaApp/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={pizzaApp}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />
-                      <div className={styles.info}>
-                          <h3>Pizza App</h3>
-                          <div className={styles.cat}>Reactjs | Redux & Framer Motion</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/Snake/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={snakeGame}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Snake Game</h3>
-                          <div className={styles.cat}>JavaScript</div>
-                      </div>
-                  </a>
-
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/TodoApp_Redux/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={todoAppReactRedux}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>To-do App</h3>
-                          <div className={styles.cat}>Reactjs | Redux</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/movieAppReact/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={movieApp}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Movie Search App</h3>
-                          <div className={styles.cat}>React.js</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/TodoApp_React.js/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={todoApp}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>To-do App</h3>
-                          <div className={styles.cat}>React.js</div>
-                      </div>
-                  </a>
-
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/React.js-MultiStepForm/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={multistepform}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Multi Step Form</h3>
-                          <div className={styles.cat}>React.js</div>
-                      </div>
-                  </a>
-                  <a
-                      href='http://dominis.phy.hr/~fbosnjak/React%20Navbar/'
-                      target='_blank'
-                      className={styles.work}>
-                      <Image
-                          src={reactNavbar}
-                          alt='Filip Bošnjak'
-                          className={styles.aboutPic}
-                      />{" "}
-                      <div className={styles.info}>
-                          <h3>Navigation Menu</h3>
-                          <div className={styles.cat}>React.js</div>
-                      </div>
-                  </a>
-*/}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {works.map(({ title, stack, href, image }, i) => (
+          <Reveal key={title} delay={(i % 3) * 80}>
+            <a
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="ds-card group block overflow-hidden transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-white/20"
+            >
+              <div className="aspect-[8/5] overflow-hidden bg-ds-surface-3">
+                <Image
+                  src={image}
+                  alt={title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                />
               </div>
-          </div>
-      </section>
-  )
-}
+              <div className="p-5">
+                <h3 className="ds-text-title text-white">{title}</h3>
+                <p className="ds-text-caption mt-1 text-ds-description">{stack}</p>
+              </div>
+            </a>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default Works;

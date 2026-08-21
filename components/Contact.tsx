@@ -1,14 +1,29 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
-import styles from "../styles/components/Contact.module.scss";
-import ErrorPopup from "@/components/notifications/ErrorPopup";
+"use client";
+
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { FaEnvelope, FaMapMarkerAlt, FaMobileAlt } from "react-icons/fa";
+import Toast from "@/components/Toast";
+import Badge from "@/components/Badge";
+import Reveal from "@/components/Reveal";
+import { site } from "@/lib/site";
 import type { ContactPayload } from "@/types/types";
 
+const contactItems = [
+  { icon: FaMobileAlt, text: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
+  { icon: FaEnvelope, text: site.email, href: `mailto:${site.email}` },
+  {
+    icon: FaMapMarkerAlt,
+    text: site.location,
+    href: "https://maps.google.com/?q=Zagreb,Croatia",
+  },
+];
+
 const Contact = () => {
-  const [errorOpen, setErrorOpen] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [successOpen, setSuccessOpen] = useState<boolean>(false);
-  const [isSending, setIsSending] = useState<boolean>(false);
-  const [isCoolingDown, setIsCoolingDown] = useState<boolean>(false);
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isCoolingDown, setIsCoolingDown] = useState(false);
   const cooldownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [payload, setPayload] = useState<ContactPayload>({});
@@ -28,7 +43,6 @@ const Contact = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
 
     if (isSending || isCoolingDown) {
       return;
@@ -81,107 +95,127 @@ const Contact = () => {
     }, 60000);
     setSuccessOpen(true);
     setPayload({});
-    form.reset();
   };
 
   return (
     <>
-      <div style={{ marginTop: "20px" }}>
-        <ErrorPopup
-          message={errorMessage}
-          isOpen={errorOpen}
-          setOpen={setErrorOpen}
-          severity="error"
-        />
-        <ErrorPopup
-          message="Message sent. Thanks for reaching out!"
-          isOpen={successOpen}
-          setOpen={setSuccessOpen}
-          severity="success"
-        />
-      </div>
-      <section className={`${styles.contact} ${styles.section}`}>
-        <div id="contact">
-          <h1 className={`${styles.sectionTitle} ${styles.title5}`}>
-            Contact Me
-          </h1>
-          <div className={styles.contactInfo}>
-            <div className={styles.item}>
-              <i className="fas fa-mobile-alt"></i>
-              +385 91 546 6832
-            </div>
+      <Toast
+        message={errorMessage}
+        isOpen={errorOpen}
+        onClose={() => setErrorOpen(false)}
+        severity="error"
+      />
+      <Toast
+        message="Message sent. Thanks for reaching out!"
+        isOpen={successOpen}
+        onClose={() => setSuccessOpen(false)}
+        severity="success"
+      />
+      <section id="contact" className="ds-container scroll-mt-24 py-[120px]">
+        <Reveal>
+          <Badge>Get in touch</Badge>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="ds-text-heading mt-4 mb-14 max-w-[600px] text-white">
+            Try it now or send a message
+          </h2>
+        </Reveal>
 
-            <div className={styles.item}>
-              <i className="fas fa-envelope"></i>
-              filipo.bosnjak@gmail.com
+        <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
+          <Reveal>
+            <div className="ds-card flex h-full flex-col gap-3 p-10">
+              <h3 className="ds-text-title text-white">Direct channels</h3>
+              <p className="ds-text-body text-ds-description">
+                Prefer email, a call, or a pin on the map. All of it still
+                lands in the same inbox.
+              </p>
+              <ul className="mt-4 flex flex-col gap-3">
+                {contactItems.map(({ icon: Icon, text, href }) => (
+                  <li key={text}>
+                    <a
+                      href={href}
+                      target={href.startsWith("http") ? "_blank" : undefined}
+                      rel={href.startsWith("http") ? "noreferrer" : undefined}
+                      className="flex items-center gap-3 rounded-[10px] border border-ds-border bg-ds-surface-1 px-4 py-3 text-[15px] text-white transition-colors hover:border-white/20"
+                    >
+                      <Icon className="text-ds-description" />
+                      {text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </Reveal>
 
-            <div className={styles.item}>
-              <i className="fas fa-map-marker-alt"></i>
-              Zagreb, Croatia
-            </div>
-          </div>
-
-          <form
-            action="#"
-            className={styles.contactForm}
-            onSubmit={handleSubmit}
-          >
-            <input
-              type="text"
-              className={styles.nameZone}
-              placeholder="Your Full Name"
-              onChange={(e) =>
-                setPayload((p) => ({ ...p, senderName: e.target.value }))
-              }
-            />
-            <input
-              type="email"
-              className={styles.emailZone}
-              placeholder="Your Email"
-              onChange={(e) =>
-                setPayload((p) => ({ ...p, from: e.target.value }))
-              }
-            />
-            <input
-              type="text"
-              className={styles.subjectZone}
-              placeholder="Subject"
-              onChange={(e) =>
-                setPayload((p) => ({ ...p, subject: e.target.value }))
-              }
-            />
-            <textarea
-              className={styles.messageZone}
-              placeholder="Message"
-              onChange={(e) =>
-                setPayload((p) => ({ ...p, body: e.target.value }))
-              }
-            />
-            <div
-              className={styles.submitWrapper}
-              data-tooltip={
-                isSending
-                  ? "Your message is being sent."
-                  : isCoolingDown
-                    ? "You cannot send another message right now."
-                    : undefined
-              }
+          <Reveal delay={100}>
+            <form
+              className="ds-card flex h-full flex-col gap-3 p-10"
+              onSubmit={handleSubmit}
             >
-              <button
-                type="submit"
-                className={styles.btn1}
-                disabled={isSending || isCoolingDown}
-              >
-                {isSending && <span className={styles.spinner}></span>}
-                {isSending
-                  ? "Sending..."
-                  : isCoolingDown
-                    ? "Message Sent"
-                    : "Send Message"}
-              </button>
-            </div>
-          </form>
+              <h3 className="ds-text-title text-white">Send a message</h3>
+              <p className="ds-text-body mb-1 text-ds-description">
+                Name, email, subject, and a few lines — that is enough.
+              </p>
+              <input
+                type="text"
+                className="ds-input"
+                placeholder="Your full name"
+                value={payload.senderName ?? ""}
+                onChange={(e) =>
+                  setPayload((p) => ({ ...p, senderName: e.target.value }))
+                }
+              />
+              <input
+                type="email"
+                className="ds-input"
+                placeholder="Your email"
+                value={payload.from ?? ""}
+                onChange={(e) =>
+                  setPayload((p) => ({ ...p, from: e.target.value }))
+                }
+              />
+              <input
+                type="text"
+                className="ds-input"
+                placeholder="Subject"
+                value={payload.subject ?? ""}
+                onChange={(e) =>
+                  setPayload((p) => ({ ...p, subject: e.target.value }))
+                }
+              />
+              <textarea
+                className="ds-input min-h-[160px] resize-y py-3.5"
+                placeholder="Message"
+                value={payload.body ?? ""}
+                onChange={(e) =>
+                  setPayload((p) => ({ ...p, body: e.target.value }))
+                }
+              />
+              <div className="group relative mt-2 self-start">
+                {(isSending || isCoolingDown) && (
+                  <div className="absolute bottom-[calc(100%+10px)] left-0 hidden w-60 rounded-[10px] border border-ds-border bg-[#262626] p-2.5 text-center text-sm leading-snug text-white group-hover:block">
+                    {isSending
+                      ? "Your message is being sent."
+                      : "You cannot send another message right now."}
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  disabled={isSending || isCoolingDown}
+                  className="ds-btn ds-btn-primary ds-btn-m"
+                >
+                  {isSending && (
+                    <span className="size-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
+                  )}
+                  {isSending
+                    ? "Sending..."
+                    : isCoolingDown
+                      ? "Message sent"
+                      : "Send message"}
+                </button>
+              </div>
+            </form>
+          </Reveal>
         </div>
       </section>
     </>
