@@ -146,8 +146,8 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
       });
     };
 
-    const REPEL_RADIUS = 120;
-    const REPEL_FORCE = 2.4;
+    const REPEL_RADIUS = 160;
+    const REPEL_FORCE = 3.2;
 
     const draw = (now: number) => {
       if (!running) return;
@@ -170,7 +170,7 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
             const f = ((REPEL_RADIUS - d) / REPEL_RADIUS) * REPEL_FORCE;
             p.vx += (dx / d) * f;
             p.vy += (dy / d) * f;
-            p.ag = Math.min(1, p.ag + 0.18);
+            p.ag = Math.min(1, p.ag + 0.3);
           }
         }
         p.ag *= 0.955;
@@ -182,10 +182,10 @@ const ParticleMark = ({ text = "FB" }: { text?: string }) => {
 
         const pulse = 0.85 + Math.sin(t * 1.2 + p.phase) * 0.15;
         // square dot at rest; agitated dots become round glowing particles
-        ctx.fillStyle = `rgba(198, 212, 230, ${p.a * pulse * (1 + p.ag * 0.8)})`;
+        ctx.fillStyle = `rgba(198, 212, 230, ${Math.min(1, p.a * pulse * (1 + p.ag * 1.4))})`;
         if (p.ag > 0.08) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, (p.size / 2) * (1 + p.ag * 0.5), 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, (p.size / 2) * (1 + p.ag * 0.9), 0, Math.PI * 2);
           ctx.fill();
         } else {
           ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
