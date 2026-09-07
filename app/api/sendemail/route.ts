@@ -124,7 +124,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "Sent", error: false });
   } catch (err) {
-    console.error("sendemail Gmail API error:", err);
+    // Log only the message: the full gaxios error dumps the refresh token.
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("sendemail Gmail API error:", message);
     return NextResponse.json(
       { message: "Could not send email. Try again later.", error: true },
       { status: 502 },
