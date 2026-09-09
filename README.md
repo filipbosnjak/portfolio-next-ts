@@ -55,6 +55,18 @@ The contact form sends mail through the Gmail API. Required env vars:
 
 Optional: `GOOGLE_REDIRECT_URI`, `GMAIL_SENDER_EMAIL`.
 
+## Visitor tracking dashboard
+
+`components/VisitTracker.tsx` posts one page view per route change (and the time on
+page on leave) to `app/api/track/`, which stores IP, Vercel geo headers (country,
+region, city), path, referrer and user agent in a Neon Postgres table. Bots and the
+signed-in owner are skipped; rows older than 90 days are pruned.
+
+The dashboard lives at `/<ADMIN_PATH>` (`app/[admin]/page.tsx`) and requires a Google
+sign-in with the owner's address (`app/api/auth/google/`). Every other path or account
+gets a 404. Required env vars (see `.env.example`): `DATABASE_URL` (Neon integration),
+`GOOGLE_AUTH_CLIENT_ID`, `GOOGLE_AUTH_CLIENT_SECRET`, `AUTH_SECRET`, `ADMIN_PATH`.
+
 ## Deploy
 
 Deployed on [Vercel](https://vercel.com/). `pnpm build` produces the production build.

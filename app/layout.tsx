@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fragment_Mono, Host_Grotesk, Montserrat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import VisitTracker from "@/components/VisitTracker";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -47,6 +49,8 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         <div className="relative z-10">{children}</div>
+        <VisitTracker />
+        <Analytics />
       </body>
     </html>
   );
